@@ -1,0 +1,821 @@
+openapi: 3.0.3
+info:
+  title: API de proyecto web para reserva de alojamientos
+  description: |-
+    Api rest para gestion de alojamientos, usuarios y reservas.
+      Bakend spring boot y uso de autenticación JWT
+    
+    Enlaces de utilidad:
+      -[Enlace de GitHub](https://github.com/Elkinlol/Proyecto-final)
+      
+    contacto: elkin.bermudezg@uqvirtual.edu.co
+  version: 1.1
+
+    
+
+servers:
+  - url: http/:localhost:8082/api
+    description: servidor local
+
+tags:
+  - name: Auth
+  - description: Autenticacion del usuario
+  - name: Users
+    description: Interactuan con alojamientos, reservas, comentarios, se relacionan con operaciones de registro, creacion, edicion, etc.
+  - name: Listings
+    description: Gestion de viviendas
+  - name: reservations
+    description: crud de reservas
+
+paths:
+  /Auth:
+    post:
+      tags: [Auth]
+      summary: Creacion de un nuevo usuario
+      operationId: registrarUsuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+      responses:
+        '201':
+          description: Usuario registrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Datos no validos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Correo ya registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /Auth/login:
+    post:
+      tags: [Auth]
+      summary: Inicio de sesion -- JWT
+      operationId: iniciarSesion
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginRequest'
+            example:
+              email: "usuario@ejemplo.com"
+              password: "ContraseñaSegura123"
+      responses:
+        '200':
+            description: Se ha iniciado sesión con exito
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/LoginResponse'
+        '400':
+            description: Faltan datos requridos (rellenar todos los campos)
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '401':
+            description: credenciales invalidas (email o contraseña incorrecta)
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '404':
+            description: Usuario no encontrado
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+        '500':
+            description: error del servidor
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+
+
+  /users/{id}/password:
+    patch:
+      tags: [Users]
+      summary: Actualizar contraseña de un usuario
+      operationId: ActualizarContrasenia
+      security:
+        - BearerAuth: [ ]
+      parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updatePassword'
+            example:
+              currentPassword: "ContraseñaVieja123"
+              newPassword: "NuevaContraseñaSegura456"
+      responses:
+        '200':
+          description: contraseña actualizada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                response: 'la contraseña ha sido actualizada'
+        '400':
+          description: Faltan datos requeridos o contraseña debil
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: 'la contraseña debe tener minimo 8 caracteres, incluyendo numeros, letras y caracteres especiales'
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: 'la contraseña actual no coincide'
+        '403':
+          description: Prohibido -- Sin permisos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: 'No tiene permiso para la actualizacion de la contraseña'
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: 'No se encuentra el usuario'
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: 'error inesperado, intentar más tarde'
+        '503':
+          description: Sin disponibilidad de servicio
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                error: "Error inesperado, intente más tarde"
+  /users/{id}:
+    put:
+      tags : [Users]
+      summary: actualizar perfil(nombre, id, telefono)
+      operationId: UpdateProfile
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+          type: Integer
+          description: Id del usuario
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProfileRequest'
+            example:
+              nombre: "Carlos Ramírez"
+              telefono: "+57 3001234567"
+              fotoPerfil: "https://miservidor.com/perfiles/carlos.jpg"
+              descripcion: "Anfitrión con experiencia en Medellín"
+      responses:
+        '200':
+          description: Perfil actualizado con exito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateProfileResponse'
+        "400":
+          description: Datos inválidos (formato incorrecto o campos vacíos)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Número de teléfono inválido"
+        "401":
+          description: Usuario no autenticado o token inválido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "No autorizado, inicie sesión"
+        "403":
+          description: Intento de editar el perfil de otro usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "No tiene permisos para editar este perfil"
+        "500":
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                error: "Error inesperado, intente más tarde"
+    get:
+      tags: [ Users ]
+      description: Ver el perfil de un usuario
+      operationId: ViewProfile
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+          type: Integer
+          description: Id del usuario
+      responses:
+        '200':
+          description: Ver perfil concretado
+          content:
+            schema:
+              $ref: "#/components/schemas/viewUsers"
+        '401':
+          description: Usuario NO autorizado
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+        '403':
+          description: No tiene  los privilegios necesarios
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: Usuario no encontrado
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+
+
+  /auth/password:
+    post:
+      tags: [Auth]
+      summary: Solicitar código de recuperación de contraseña
+      description: Envía un código de recuperación al correo electrónico del usuario. El código expira en 15 minutos.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RecoveryResponse"
+      responses:
+        "200":
+          description: Código de recuperación enviado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Se ha enviado un código de recuperación a su correo electrónico."
+        "404":
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/change/password:
+    put:
+      tags: [Auth]
+      summary: Se caambia la contraseña
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordRequest"
+      responses:
+        '200':
+          description: contraseña cambiada de manera exitosa
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+
+        '400':
+          description: Codigo invalido o expirado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        
+        '404':
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+        '500':
+          description: error del sevidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+
+  /listings:
+    post:
+      tags: [Listings]
+      summary: crear un nuevo alojamiento
+      operationId: createListing
+      security:
+        - bearerAuth: [ ]
+      requestBody:
+        content:
+          schema:
+            $ref: "#/components/schemas/CreateListingRequest"
+      responses:
+        '201':
+          description: Alojamiento creado exitosamente
+          content:
+            schema:
+              $ref: "#/components/schemas/SuccessResponse"
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+          "401":
+            description: No autorizado (JWT inválido o ausente)
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+          "403":
+            description: No tiene permisos para realizar la accion
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+          "500":
+            description: error del servidor
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorResponse"
+
+  /listings/{id}:
+    put:
+      summary: Editar un alojamiento existente
+      tags:  [Listings]
+      operationId: editListing
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del alojamiento a editar
+          schema:
+            type: integer
+            example: 101
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateAlojamientoRequest"
+      responses:
+        "200":
+          description: Alojamiento actualizado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlojamientoResponse"
+        "400":
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: El usuario no es propietario del alojamiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Alojamiento no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Eliminar un alojamiento (soft delete)
+      tags: [Listings]
+      operationId: deleteListing
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del alojamiento a eliminar
+          schema:
+            type: integer
+            example: 101
+      responses:
+        "200":
+          description: Alojamiento marcado como eliminado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlojamientoResponse"
+        "400":
+          description: El alojamiento no puede eliminarse (reservas futuras)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: El usuario no es propietario del alojamiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Alojamiento no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+
+
+
+
+
+components:
+  schemas:
+
+    AlojamientoResponse:
+      type: object
+      properties:
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        ubicacion:
+          type: object
+        precioPorNoche:
+          type: number
+        capacidad:
+          type: integer
+        imagenes:
+          type: array
+          items:
+            type: string
+            format: uri
+        anfitrionId:
+          type: integer
+          example: 55
+        fechaPublicacion:
+          type: string
+          format: date-time
+          example: "2025-09-07T13:00:00Z"
+
+    UpdateAlojamientoRequest:
+      type: object
+      properties:
+        titulo:
+          type: string
+          example: Pent house
+        descripcion:
+          type: string
+          example: Las mejores vistas de medellin
+        ubicacion:
+          type: object
+          example: {direccion: calle 14, ciudad: medellin, latitud: 100, longitud: 200}
+        precioPorNoche:
+          type: number
+          format: float
+          example: 200
+        capacidad:
+          type: integer
+          example: 40
+        imagenes:
+          type: array
+          items:
+            type: string
+            format: uri
+
+
+    CreateListingRequest:
+      type: object
+      required:
+        -ubicacion
+        -price
+      properties:
+        ubicacion:
+          type: object
+        price:
+          type: integer
+          description: precio por noche del alojamiento
+          example: 20000
+        title:
+          type: string
+          description: Nombre del alojamiento
+          example: La finquita
+        descriptionListing:
+          type: string
+          description: descripcion detallada del alojamiento
+          example: Alojamiento a los alrededores de la montaña con excelente clima
+        capacity:
+          type: integer
+          description: capacidad maxima del alojamiento
+          example: 20
+        service:
+          type: string
+          description: que servicios vienen con el alojamiento
+          example: Wifi, cocina, etc
+        imagenes:
+          type: array
+          items:
+            type: string
+            format: uri
+    ChangePasswordRequest:
+      type: object
+      required:
+        - new password
+        - codigo
+      properties:
+        new password:
+          type: string
+          minLength: 8
+          pattern: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"
+          description: La contraseña del usuario (debe contener al menos un dígito, una letra minúscula y una letra mayúscula)
+        codigo:
+          type: string
+          example: 9802
+
+
+    RecoveryResponse:
+      type: object
+      required:
+          - email
+      properties:
+        email:
+            type: string
+            format: email
+            example: "carlos.perez@mail.com"
+
+    viewUsers:
+      Usuario:
+        type: object
+        properties:
+          id:
+            type: integer
+            example: 12
+          nombre:
+            type: string
+            example: "Carlos Pérez"
+          email:
+            type: string
+            format: email
+            example: "carlos.perez@mail.com"
+          telefono:
+            type: string
+            example: "+57 3123456789"
+          rol:
+            type: string
+            enum: [ usuario, anfitrion ]
+            example: "usuario"
+          fechaNacimiento:
+            type: string
+            format: date
+            example: "1995-06-20"
+          fotoPerfil:
+            type: string
+            format: uri
+            nullable: true
+            example: "https://cdn.miapp.com/usuarios/12/perfil.jpg"
+          descripcion:
+            type: string
+            nullable: true
+            example: "Anfitrión con experiencia en Medellín."
+
+    UserRegister:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          pattern: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"
+          description: La contraseña del usuario (debe contener al menos un dígito, una letra minúscula y una letra mayúscula)
+        fullName:
+          type: string
+          maxLength: 100
+        dateBirth:
+          type: string
+          format: date
+          example: "1990-01-01"
+        role:
+          type: string
+          enum:
+            - user
+            - admin
+          default: user
+      required:
+        - fullName
+        - email
+        - password
+    loginRequest:
+      type: object
+      required: true
+        -password
+        -email
+      properties:
+        email:
+          type: string
+          format: email
+          example: "usuario@ejemplo.com"
+        password:
+          type: string
+          format: password
+          example: "ContraseñaSegura123"
+
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: JWT de autenticación
+          user:
+            type: object
+            properties:
+              id:
+                type: integer
+              nombre:
+                type: string
+              email:
+                type: string
+                format: email
+              rol:
+                type: string
+                enum: [ usuario, anfitrion]
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+          maxLength: 100
+        telefono:
+          type: string
+          pattern: "^[+0-9]{7,15}$"
+        fotoPerfil:
+          type: string
+          format: uri
+        descripcion:
+          type: string
+          maxLength: 500
+          description: Solo visible para anfitriones
+      description: Campos opcionales para actualizar el perfil
+
+    UpdateProfileResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nombre:
+          type: string
+        email:
+          type: string
+          format: email
+        telefono:
+          type: string
+        rol:
+          type: string
+          enum: [ usuario, anfitrion ]
+        fotoPerfil:
+          type: string
+          format: uri
+        descripcion:
+          type: string
+
+    updatePassword:
+      type: object
+      required:
+        - currentPassword
+        - newPassword
+      properties:
+        currentPassword:
+          type: string
+          description: Contraseña actual del usuario
+        newPassword:
+          type: string
+          minLength: 8
+          pattern: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).*$"
+          description: Nueva contraseña del usuario (debe contener al menos un dígito, una letra minúscula y una letra mayúscula)
+
+    SuccessResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Contraseña actualizada exitosamente"
+      required:
+        - message
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        fullName:
+          type: string
+        dateBirth:
+          type: string
+          format: date
+        role:
+          type: string
+      required:
+        - id
+        - email
+        - fullName
+        - role
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+        - message
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
+

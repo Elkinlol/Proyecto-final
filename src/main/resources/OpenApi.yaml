@@ -28,6 +28,8 @@ tags:
     description: Gestion de viviendas
   - name: Reservations
     description: crud de reservas
+  - name: Comments
+    description: Manejo de los comentarios de una reserva
 
 paths:
   /Auth:
@@ -203,7 +205,7 @@ paths:
           in: path
           required: true
           schema:
-          type: Integer
+          type: String
           description: Id del usuario
       requestBody:
         content:
@@ -288,6 +290,12 @@ paths:
           content:
             schema:
               $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error del sevidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 
   /auth/password:
@@ -318,6 +326,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+        "500":
+          description: Error del sevidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 
   /auth/change/password:
     put:
@@ -630,6 +646,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
                 
                 
   /listings/{id}/metrics:
@@ -823,14 +845,478 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-      
+
+    delete:
+      summary: Cancelar una reserva
+      tags: [Reservations]
+      operationId: cancelReserv
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de la reserva a cancelar
+          schema:
+            type: string
+            example: 2341
+      responses:
+        '200':
+          description: Reserva cancelada de manera exitosa
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        '400':
+          description: No se puede cancelar la reserva (El tiempo no es adecuado)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: No se encuentra autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '403':
+          description: No tiene permisos para realizar esta acción
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: Reserva no encontrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '503':
+          description: Servicio no disponible
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+
+  /listings/{id}/reservs:
+    get:
+      summary: Mostras las reservas de los alojamientos
+      tags: [Reservations]
+      operationId: getReservLisiting
+      security:
+        -bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 2314
+      responses:
+        '200':
+          description: Reservas de alojamiento mostradas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AlojamientoResponse"
+        '400':
+          description: Datos invalidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: No se encuentran reservas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 
 
+  /comments/{id}:
+    post:
+      summary: Crear un nuevo comentario
+      tags: [Comments]
+      operationId: createComment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Id de la reserva que se va a comentar
+          schema:
+            type: string
+            example: 2314
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateCommentRequest"
+      responses:
+        '201':
+          description: El comentario fue creado con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentResponse"
+        '400':
+          description: El comentario no fue creado por falta del mensaje
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '409':
+          description: No se pudo crear el comentario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: No se pudo crear el comentario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /listings/{id}/comments:
+    get:
+      summary: Listar comentarios de un alojamiento
+      tags: [Comments]
+      operationId: listComentsByListing
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 5231
+        - name: page
+          in: query
+          required: false
+          description: Número de página para paginación
+          schema:
+            type: integer
+            example: 1
+        - name: limit
+          in: query
+          required: false
+          description: Número de resultados por página
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Listado mostrado correctamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommentResponse"
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: Recurso no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Error de servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+                
+                
+  /comments/{id}/response:
+  post:
+    summary: Responder a un comentario con el rol de  anfitrión
+    tags: [Comments]
+    operationId: replyToComment
+    security:
+      - bearerAuth: [ ]
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID del comentario al que se va a responder
+        schema:
+          type: integer
+          example: 789
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ReplyRequest"
+    responses:
+      '201':
+        description: Respuesta registrada exitosamente
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReplyResponse"
+      '400':
+        description: Datos inválidos
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+      '401':
+        description: No autorizado
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+      '403':
+        description: El usuario no es anfitrión del alojamiento relacionado
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+      '404':
+        description: Comentario no encontrado
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+      '500':
+        description: Error de servidor
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+
+  /listings/{id}/promotion:
+    get:
+      summary: Listar las promociones
+      tags:
+        - Promotion
+      operationId: listListindByIdPromotion
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: 9513
+      responses:
+        '200':
+          description: Promociones enlistadas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"      
+        '404':
+          description: No encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Promociones enlistadas
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    post:
+      summary: Crear una nueva promocion
+      tags:
+        - Promotion
+      operationId: createPromotion
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          requiered: True
+          schema:
+            type: String
+            Example: 4120
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreatePromotionResponse"
+      responses:
+        '201':
+          description: Promocion creada exitosamente
+          content:
+            application/json:
+              $ref: "#/components/schemas/PromotionResponse"
+        '400':
+          description: Datos inválidos (fechas o porcentaje incorrecto)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '403':
+          description: No tiene permisos para gestionar este alojamiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: Alojamiento no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Error de servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 
 components:
   schemas:
+
+    CreatePromotionResponse:
+      type: object
+      properties:
+        descuento:
+          type: number
+          description: Porcentaje de descuento (1-100)
+          example: 15
+        fechaInicio:
+            type: string
+            format: date
+            example: "2025-12-01"
+        fechaFin:
+            type: string
+            format: date
+            example: "2025-12-31"
+        required:
+          - descuento
+          - fechaInicio
+          - fechaFin
+
+    PromotionResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 55
+        alojamientoId:
+          type: integer
+          example: 101
+        descuento:
+          type: number
+          example: 15
+        fechaInicio:
+          type: string
+          format: date
+          example: "2025-12-01"
+        fechaFin:
+          type: string
+          format: date
+          example: "2025-12-31"
+        estado:
+          type: string
+          enum: [ Activa, Expirada ]
+          example: Activa
+
+    ReplyRequest:
+      type: object
+      properties:
+        respuesta:
+          type: string
+          maxLength: 500
+          example: "Gracias por tu comentario, fue un placer recibirte."
+      required:
+        - respuesta
+
+    ReplyResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 456
+        comentarioId:
+          type: integer
+          example: 789
+        anfitrionId:
+            type: integer
+            example: 22
+        respuesta:
+            type: string
+            example: "Gracias por tu comentario, fue un placer recibirte."
+        fechaCreacion:
+            type: string
+            format: date-time
+            example: "2025-09-07T17:30:00Z"
+
+    CreateCommentRequest:
+      type: object
+      properties:
+        calificacion:
+          type: integer
+          minimum: 1
+          maximum: 5
+          example: 5
+        comentario:
+          type: string
+          maxLength: 500
+          example: "El lugar estaba impecable y el anfitrión fue muy amable."
+      required:
+        - calificacion
+
+    CommentResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 789
+        reservaId:
+          type: integer
+          example: 1234
+        usuarioId:
+          type: integer
+          example: 45
+        calificacion:
+          type: integer
+          example: 5
+        comentario:
+          type: string
+          example: "El lugar estaba impecable y el anfitrión fue muy amable."
+        fechaCreacion:
+          type: string
+          format: date-time
+          example: "2025-09-07T15:45:00Z"
+
+
+
+
+
+
     ReservResponse:
       type: object
       properties:
@@ -898,19 +1384,22 @@ components:
         promedioCalificacion:
           type: number
           example: 4.3
+      required:
+        -reservasTotales
+        -promedioCalificacion
 
     AlojamientoResponse:
       type: object
       properties:
-        titulo:
+        title:
           type: string
-        descripcion:
+        description:
           type: string
         ubicacion:
           type: object
-        precioPorNoche:
+        PriceForNight:
           type: number
-        capacidad:
+        Capacity:
           type: integer
         imagenes:
           type: array
@@ -924,24 +1413,30 @@ components:
           type: string
           format: date-time
           example: "2025-09-07T13:00:00Z"
+      required:
+        - title
+        - ubicacion
+        - priceForNight
+        - description
+        - capacity
 
     UpdateAlojamientoRequest:
       type: object
       properties:
-        titulo:
+        title:
           type: string
           example: Pent house
-        descripcion:
+        descition:
           type: string
           example: Las mejores vistas de medellin
         ubicacion:
           type: object
           example: {direccion: calle 14, ciudad: medellin, latitud: 100, longitud: 200}
-        precioPorNoche:
+        priceForNight:
           type: number
           format: float
           example: 200
-        capacidad:
+        Capacity:
           type: integer
           example: 40
         imagenes:
@@ -956,6 +1451,11 @@ components:
       required:
         -ubicacion
         -price
+        -capacity
+        -title
+        -desciptionListing
+        -imagenes
+
       properties:
         ubicacion:
           type: object

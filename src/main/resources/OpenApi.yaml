@@ -577,6 +577,8 @@ paths:
       summary: Buscar alojamientos
       tags: [ Listings ]
       operationId: searchListings
+      security:
+        - bearerAuth: [ ]
       parameters:
         - name: precio
           in: query
@@ -850,6 +852,8 @@ paths:
       summary: Cancelar una reserva
       tags: [Reservations]
       operationId: cancelReserv
+      security:
+        - bearerAuth: [ ]
       parameters:
         - name: id
           in: path

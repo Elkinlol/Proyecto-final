@@ -24,7 +24,7 @@ public class ReservationController {
         return ResponseEntity.ok().build();
     }
     @GetMapping("/listings/{id}")
-    public ResponseEntity<String> getListings(@PathVariable String id){
+    public ResponseEntity<String> getListingsByReservation(@PathVariable String id){
         return ResponseEntity.ok().build();
     }
 }

@@ -1,4 +1,4 @@
-package co.avanzada.dtos;
+package co.avanzada.dtos.user;
 
 import co.avanzada.model.Rol;
 import jakarta.validation.constraints.Email;

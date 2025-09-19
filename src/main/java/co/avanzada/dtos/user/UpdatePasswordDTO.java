@@ -1,4 +1,4 @@
-package co.avanzada.dtos;
+package co.avanzada.dtos.user;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;

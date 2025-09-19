@@ -1,4 +1,4 @@
-package co.avanzada.dtos;
+package co.avanzada.dtos.listings;
 
 import co.avanzada.model.Adress;
 import co.avanzada.model.Host;

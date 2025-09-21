@@ -9,4 +9,5 @@ public interface UserService {
     Void updateUser ( UpdateProfileDTO updateProfileDTO, String id);
     User findUserById( String id);
     Void updatePassword( UpdatePasswordDTO request,  String id );
+    Void deleteUser(  String id);
 }

@@ -25,4 +25,9 @@ public class UserServiceImpl implements UserService {
     public Void updatePassword(UpdatePasswordDTO updatePasswordDTO, String id){
         return null;
     }
+
+    @Override
+    public Void deleteUser( String id) {
+        return null;
+    }
 }

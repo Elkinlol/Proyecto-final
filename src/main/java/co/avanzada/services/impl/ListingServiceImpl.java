@@ -1,11 +1,10 @@
 package co.avanzada.services.impl;
-import co.avanzada.dtos.MetricsDTO;
+import co.avanzada.dtos.listings.MetricsDTO;
 import co.avanzada.dtos.listings.CreateListingDTO;
 import co.avanzada.dtos.listings.UpdateListingDTO;
 import co.avanzada.model.Listing;
 import co.avanzada.model.Reservations;
 import co.avanzada.model.Review;
-import co.avanzada.model.Services;
 import co.avanzada.services.ListingService;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package co.avanzada.dtos;
+package co.avanzada.dtos.listings;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

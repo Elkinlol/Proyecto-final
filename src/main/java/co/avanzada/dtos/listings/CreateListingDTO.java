@@ -5,16 +5,16 @@ import co.avanzada.model.Host;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Length;
-
+import java.math.BigDecimal;
 import java.util.List;
 
 public record CreateListingDTO(
-        @NotEmpty @NotNull @Length (max =100)  String title,
-        @Valid @NotEmpty @NotNull Adress adress,
-        @Valid @NotEmpty @NotNull Host user,
-        @NotEmpty @NotNull @DecimalMin("0.1") float nightlyPrice,
+        @NotBlank @Length (max =100)  String title,
+        @Valid  @NotNull Adress adress,
+        @Valid  @NotNull Host user,
+        @NotNull @DecimalMin("0.1") BigDecimal nightlyPrice,
         @NotEmpty @NotNull @Min(1) int maxGuest,
-        @NotEmpty @NotNull @Max(500) String description,
-        @NotEmpty @NotNull @Min(1) @Max(10) List<String> images
+        @NotBlank @Length(max = 500) String description,
+        @NotEmpty @NotNull @Size(min = 1, max = 10) List<String> images
 ) {
 }

@@ -196,7 +196,7 @@ paths:
   /users/{id}:
     put:
       tags : [Users]
-      summary: actualizar perfil(nombre, id, telefono)
+      summary: actualizar perfil(nombre, foto, telefono)
       operationId: UpdateProfile
       security:
         - bearerAuth: []
@@ -292,6 +292,50 @@ paths:
               $ref: "#/components/schemas/ErrorResponse"
         "500":
           description: Error del sevidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Se cambia el estado de un usuario
+      tags: [Users]
+      operationId: deleteUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            example: 1134
+            type: string
+      responses:
+        "200":
+          description: Usuario eliminado con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/deleteUserRespose"
+        "401":
+          description: No tiene permisos necesarios
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: No tiene acceso a ese recurso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error interno del servidor
           content:
             application/json:
               schema:
@@ -442,14 +486,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/UpdateAlojamientoRequest"
+              $ref: "#/components/schemas/UpdateListingRequest"
       responses:
         "200":
           description: Alojamiento actualizado exitosamente
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AlojamientoResponse"
+                $ref: "#/components/schemas/ListingResponse"
         "400":
           description: Datos inválidos
           content:
@@ -494,7 +538,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AlojamientoResponse"
+                $ref: "#/components/schemas/DeleteListingResponse"
         "400":
           description: El alojamiento no puede eliminarse (reservas futuras)
           content:
@@ -545,7 +589,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AlojamientoResponse"
+                $ref: "#/components/schemas/ListingResponse"
         '401':
           description: No tiene autorizacion
           content: 
@@ -635,7 +679,7 @@ paths:
                   results:
                     type: array
                     items:
-                      $ref: "#/components/schemas/AlojamientoResponse"
+                      $ref: "#/components/schemas/ListingResponse"
         "400":
           description: Parámetros de búsqueda inválidos
           content:
@@ -927,7 +971,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AlojamientoResponse"
+                $ref: "#/components/schemas/ListingResponse"
         '400':
           description: Datos invalidos
           content:
@@ -1161,7 +1205,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreatePromotionResponse"
+              $ref: "#/components/schemas/CreatePromotionRequest"
       responses:
         '201':
           description: Promocion creada exitosamente
@@ -1203,7 +1247,18 @@ paths:
 components:
   schemas:
 
-    CreatePromotionResponse:
+    deleteUserRespose:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        message:
+          type: string
+          example: "El Usuario con id 123 fue eliminado"
+
+
+    CreatePromotionRequest:
       type: object
       properties:
         descuento:
@@ -1368,16 +1423,27 @@ components:
     
     MakeReservRequest:
       type: object
+      required:
+        - alojamientoId
+        - fechaIngreso
+        - fechaSalida
+        - cantHuespedes
       properties:
+        alojamientoId:
+          type: integer
+          example: 123
         fechaIngreso:
-          type: date
-          example: 2026/06/04
+          type: string
+          format: date
+          example: 2026-06-04
         fechaSalida:
-          type: date
-          example: 2026/06/07
+          type: string
+          format: date
+          example: 2026-06-07
         cantHuespedes:
-          type: number
+          type: integer
           example: 2
+
     
     listingMetricsResponse:
       type: object
@@ -1392,7 +1458,7 @@ components:
         -reservasTotales
         -promedioCalificacion
 
-    AlojamientoResponse:
+    ListingResponse:
       type: object
       properties:
         title:
@@ -1424,7 +1490,17 @@ components:
         - description
         - capacity
 
-    UpdateAlojamientoRequest:
+    DeleteListingResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "success"
+        message:
+          type: string
+          example: "El alojamiento con id 123 fue eliminado"
+
+    UpdateListingRequest:
       type: object
       properties:
         title:
@@ -1615,6 +1691,10 @@ components:
     UpdateProfileRequest:
       type: object
       properties:
+        rol:
+          type: Rol
+          description: Rol del usuario actual
+          enum: [Host, Guest]
         nombre:
           type: string
           maxLength: 100
@@ -1678,6 +1758,8 @@ components:
     UserResponse:
       type: object
       properties:
+        numberPhone:
+          type: string
         id:
           type: string
         email:
@@ -1693,7 +1775,7 @@ components:
         - id
         - email
         - fullName
-        - role
+        - numberPhone
     ErrorResponse:
       type: object
       properties:

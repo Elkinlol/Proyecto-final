@@ -3,6 +3,7 @@ package co.avanzada.controllers;
 
 import co.avanzada.dtos.user.UpdatePasswordDTO;
 import co.avanzada.dtos.user.UpdateProfileDTO;
+import co.avanzada.dtos.user.UserDTO;
 import co.avanzada.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +25,19 @@ public class UserController {
     }
 
     @PutMapping("/{id}/")
-    public ResponseEntity <String> updateUser (@RequestBody UpdateProfileDTO updateProfileDTO, @PathVariable String id) {
+    public ResponseEntity <UserDTO> updateUser (@RequestBody UpdateProfileDTO updateProfileDTO, @PathVariable String id) {
         userService.updateUser(updateProfileDTO, id);
         return ResponseEntity.ok().build();}
 
     @GetMapping("/{id}")
-    public ResponseEntity <String> findUserById(@PathVariable String id){
+    public ResponseEntity <UserDTO> findUserById(@PathVariable String id){
         userService.findUserById(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity <String> deleteUser(@PathVariable String id){
+        userService.deleteUser(id);
         return ResponseEntity.ok().build();
     }
 }

@@ -5,6 +5,7 @@ import co.avanzada.dtos.listings.UpdateListingDTO;
 import co.avanzada.model.Listing;
 import co.avanzada.model.Reservations;
 import co.avanzada.model.Review;
+import co.avanzada.model.Services;
 import co.avanzada.services.ListingService;
 import org.springframework.stereotype.Service;
 
@@ -33,8 +34,13 @@ public class ListingServiceImpl implements ListingService {
         return null;
     }
 
-
     @Override
+    public List<Listing> getListingBySearch(String ciudad, String fecha1, String fecha2, float nightlyPrice, List<Services> servicesList) {
+        return List.of();
+    }
+
+
+    /*@Override
     public MetricsDTO getMetrics(String id, String startDate, String endDate) {
         Listing listing = listingRepository.findById(listingId)
                 .orElseThrow(() -> new RuntimeException("Listing not found"));
@@ -62,5 +68,8 @@ public class ListingServiceImpl implements ListingService {
                 .orElse(0.0);
 
         return new MetricsDTO(totalReservations, averageRating);
+    }*/
+    public Void getMetrics(String id, String startDate, String endDate){
+        return null;
     }
 }

@@ -15,5 +15,5 @@ public interface ListingService {
     Void deleteListing( String id);
     Listing getListing( String id);
     List <Listing> getListingBySearch(String ciudad, String fecha1,  String fecha2, float  nightlyPrice,List<Services> servicesList);
-    List<String> getMetrics( String id, String startDate, String endDate);
+    Void getMetrics( String id, String startDate, String endDate);
 }

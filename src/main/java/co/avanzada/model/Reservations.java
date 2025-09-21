@@ -13,5 +13,6 @@ public class Reservations {
     private Date checkOut;
     private int guestCount;
     private String listingId;
+    private Status status;
 
 }

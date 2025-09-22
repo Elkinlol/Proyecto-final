@@ -5,7 +5,7 @@ import jakarta.validation.constraints.*;
 
 import java.util.Date;
 
-public record CreateUserDTO(@Email @NotBlank Email email,
+public record CreateUserDTO(@Email @NotBlank String email,
                             @NotBlank
                             @Min(8)
                             @Pattern(

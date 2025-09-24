@@ -1,0 +1,22 @@
+POST http://localhost:8082/api/auth
+Content-Type: application/json
+
+{
+  "fullName": "Carlos Ramirez",
+  "numberPhone": "2131245123",
+  "email": "carlos@email.com",
+  "password": "12Wanda12",
+  "birthday": "2000-08-22"
+}
+
+###
+POST http://localhost:8082/api/auth
+Content-Type: application/json
+
+{
+"fullName": "",
+"numberPhone": "121212",
+"email": "carlos@email.com",
+"password": "12345678",
+"birthday": "2000-08-22"
+}

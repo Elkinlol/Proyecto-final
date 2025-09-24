@@ -1,11 +1,10 @@
 package co.avanzada.controllers;
 
 
-import co.avanzada.dtos.ResponseDTO;
+import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.listings.MetricsDTO;
 import co.avanzada.dtos.listings.CreateListingDTO;
 import co.avanzada.dtos.listings.UpdateListingDTO;
-import co.avanzada.model.Listing;
 import co.avanzada.model.Services;
 import co.avanzada.services.ListingService;
 import jakarta.validation.Valid;
@@ -18,7 +17,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/Listings")
+@RequestMapping("/api/listings")
 @RequiredArgsConstructor
 public class ListingController {
 

@@ -17,9 +17,9 @@ import java.util.Date;
 @Setter
 
 public class UpdateProfileDTO {
-      @NotBlank @Length(max= 50) private String name;
-      @NotBlank @Length(max = 20) private String phone;
+      @NotBlank @Length(max= 100) private String fullName;
+      @NotBlank @Length(min= 8) private String numberPhone;
       @NotBlank @Length(max= 300)  private String profilePhoto;
       @NotBlank @Length(max = 500) private String descripcion;
-      @Valid @NotNull @NotEmpty @Max(20) private Rol rol;
+      @Valid @NotNull  private Rol rol;
 }

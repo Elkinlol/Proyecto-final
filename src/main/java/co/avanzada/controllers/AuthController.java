@@ -1,35 +1,36 @@
 package co.avanzada.controllers;
 
-import co.avanzada.dtos.ResponseDTO;
+import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.auth.RequestResetPasswordDTO;
 import co.avanzada.dtos.auth.ResetPasswordDTO;
 import co.avanzada.dtos.user.CreateUserDTO;
 import co.avanzada.dtos.user.LoginUserDTO;
+import co.avanzada.dtos.user.UserDTO;
 import co.avanzada.services.AuthService;
 import jakarta.validation.Valid;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Auth")
+@RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
-    AuthService authService;
+    private final AuthService authService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<String>> createUser(@RequestBody CreateUserDTO createUserDTO){
-        String message= authService.createUser(createUserDTO);
-        return ResponseEntity.ok(new ResponseDTO<>(false, message));
+    public ResponseEntity<ResponseDTO<UserDTO>> createUser(@Valid @RequestBody CreateUserDTO createUserDTO){
+        UserDTO userDTO= authService.createUser(createUserDTO);
+        ResponseDTO responseDTO= new ResponseDTO(true, userDTO );
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);//Falta la respuesta 409
     }
-
-
     @PostMapping("/Login")
-    public ResponseEntity<ResponseDTO<String>> loginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
-        authService.loginUser(loginUserDTO);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ResponseDTO<UserDTO>> loginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
+
+        UserDTO userDTO = authService.loginUser(loginUserDTO);
+        return ResponseEntity.ok().body(new ResponseDTO(true, userDTO));
     }
     @PostMapping("Password")
     public ResponseEntity<ResponseDTO<String>> requestResetPassword(@Valid @RequestBody RequestResetPasswordDTO resetPasswordDTO){

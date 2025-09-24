@@ -1,17 +1,35 @@
 package co.avanzada.model;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
+@Entity
 
 public class Adress {
-    String adress;
-    String city;
-    String latitud;
-    String longitud;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String adress;
+
+    @Column(nullable = false)
+    private String city;
+
+    @Column(nullable = false)
+    private String latitud;
+
+    @Column(nullable = false)
+    private String longitud;
+
+    @OneToOne
+    @Column(nullable = false)
+    private Listing listing;
 
 }

@@ -1,6 +1,6 @@
 package co.avanzada.controllers;
 
-import co.avanzada.dtos.ResponseDTO;
+import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.reservs.CreateReserveDTO;
 import co.avanzada.services.ReservationService;
 import jakarta.validation.Valid;
@@ -10,11 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Reserves")
+@RequestMapping("/api/reserves")
 @RequiredArgsConstructor
 public class ReservationController {
 
-    ReservationService reservationService;
+    private final ReservationService reservationService;
 
     @PostMapping()
     public ResponseEntity <ResponseDTO<String>> CreateReserve(@Valid @RequestBody CreateReserveDTO createReserveDTO){

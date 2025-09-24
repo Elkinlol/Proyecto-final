@@ -1,6 +1,6 @@
 package co.avanzada.services;
 
-import co.avanzada.dtos.CreateReviewDTO;
+import co.avanzada.dtos.review.CreateReviewDTO;
 
 
 public interface ReviewService {

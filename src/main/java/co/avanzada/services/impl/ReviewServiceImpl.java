@@ -1,6 +1,6 @@
 package co.avanzada.services.impl;
 
-import co.avanzada.dtos.CreateReviewDTO;
+import co.avanzada.dtos.review.CreateReviewDTO;
 import co.avanzada.services.ReviewService;
 import org.springframework.stereotype.Service;
 

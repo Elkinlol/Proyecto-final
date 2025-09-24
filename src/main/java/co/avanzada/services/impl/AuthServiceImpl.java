@@ -4,46 +4,53 @@ import co.avanzada.dtos.auth.RequestResetPasswordDTO;
 import co.avanzada.dtos.auth.ResetPasswordDTO;
 import co.avanzada.dtos.user.CreateUserDTO;
 import co.avanzada.dtos.user.LoginUserDTO;
+import co.avanzada.dtos.user.UserDTO;
 import co.avanzada.exception.ConflictException;
+import co.avanzada.exception.UnatorizedException;
 import co.avanzada.mappers.UserMapper;
-import co.avanzada.model.Rol;
-import co.avanzada.model.Status;
+
 import co.avanzada.model.User;
+import co.avanzada.repository.UserRepository;
 import co.avanzada.services.AuthService;
 import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-
 @RequiredArgsConstructor
-
-
-
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    UserMapper userMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final UserRepository userRepository;
+
     @Override
-    public CreateUserDTO createUser(CreateUserDTO createUserDTO)  {
-        if(IsEmailDuplicated(createUserDTO.email())){
-            throw new ConflictException ("Correo electronico asociado a otra cuenta");
-        }
-        String password = encode(createUserDTO.password());
+    public UserDTO createUser(CreateUserDTO createUserDTO)  {
         User user =userMapper.toEntity(createUserDTO);
+        if(userRepository.findByEmail(user.getEmail())!=null){
+            new ConflictException("Este email ya existe");
+        }
+
+        String password = encode(createUserDTO.password());
         user.setPassword(password);
-        user.setCreateAT(LocalDateTime.now());
-        user.setStatus(Status.ACTIVE);
-        user.setRol(Rol.GUEST);
-        //User saveUser= userRepository.save(user);
-        return createUserDTO;
+        userRepository.save(user);
+        UserDTO userDTO = userMapper.toUserDTO(user);
+        return userDTO;
     }
 
     @Override
-    public Void loginUser(LoginUserDTO loginUserDTO) {
+    public UserDTO loginUser(LoginUserDTO loginUserDTO) {
+        User user = userRepository.findByEmail(loginUserDTO.email())
+                .orElseThrow(() -> new ChangeSetPersister.NotFoundException("Usuario no encontrado"));*/
+        if(!passwordEncoder.matches(loginUserDTO.password(),user.getPassword())){
+            throw new UnatorizedException("Contraseña incorrecta");
+        }
 
-        return null;
+        UserDTO userDTO = userMapper.toUserDTO(user);
+
+        return userDTO;
     }
 
     @Override
@@ -55,6 +62,8 @@ public class AuthServiceImpl implements AuthService {
     public String resetPassword(ResetPasswordDTO resetPasswordDTO) {
         return "";
     }
+
+
 
     private String encode(String password){
         var passwordEncoder = new BCryptPasswordEncoder();

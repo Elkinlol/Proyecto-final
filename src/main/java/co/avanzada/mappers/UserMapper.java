@@ -2,7 +2,6 @@ package co.avanzada.mappers;
 
 import co.avanzada.dtos.user.CreateUserDTO;
 import co.avanzada.dtos.user.UserDTO;
-import co.avanzada.dtos.user.CreateUserDTO;
 import co.avanzada.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -15,7 +14,7 @@ public interface UserMapper {
     @Mapping(target = "status", constant = "ACTIVE")
     @Mapping(target = "rol", constant = "GUEST")
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
-    User toEntity(CreateUserDTO userDTO);
 
+    User toEntity(CreateUserDTO createUserDTO);
     UserDTO toUserDTO(User user);
 }

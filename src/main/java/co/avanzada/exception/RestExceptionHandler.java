@@ -1,8 +1,8 @@
 package co.avanzada.exception;
 
 
-import co.avanzada.dtos.ResponseDTO;
-import co.avanzada.dtos.ValidationDTO;
+import co.avanzada.dtos.extras.ResponseDTO;
+import co.avanzada.dtos.extras.ValidationDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -20,7 +20,7 @@ public class RestExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ResponseDTO<String>> noResourceFoundExceptionHandler(NoResourceFoundException ex){
-        return ResponseEntity.status(404).body( new ResponseDTO<>(true, "El recurso solicitado no existe") );
+        return ResponseEntity.status(404).body( new ResponseDTO<>(true, "El recurso solicitado no debe existir") );
     }
 
     @ExceptionHandler(Exception.class)
@@ -50,5 +50,10 @@ public class RestExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ResponseDTO<String>> handleAccessDenied(AccessDeniedException ex) {
         return ResponseEntity.status(403).body(new ResponseDTO<>(true, "No tienes permisos para acceder a este recurso"));
+    }
+
+    @ExceptionHandler(UnatorizedException.class)
+    public ResponseEntity<ResponseDTO<String>> handleUnatorizedException(UnatorizedException ex) {
+        return ResponseEntity.status(401).body(new ResponseDTO<>(true, ex.getMessage()));
     }
 }

@@ -1,7 +1,7 @@
 package co.avanzada.controllers;
 
 
-import co.avanzada.dtos.ResponseDTO;
+import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.user.UpdatePasswordDTO;
 import co.avanzada.dtos.user.UpdateProfileDTO;
 import co.avanzada.dtos.user.UserDTO;
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/Users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 

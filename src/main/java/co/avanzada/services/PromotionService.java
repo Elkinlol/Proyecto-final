@@ -1,6 +1,6 @@
 package co.avanzada.services;
 
-import co.avanzada.dtos.CreatePromotionDTO;
+import co.avanzada.dtos.promotionDTO.CreatePromotionDTO;
 
 
 

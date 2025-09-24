@@ -73,6 +73,8 @@ paths:
     post:
       tags: [Auth]
       summary: Inicio de sesion -- JWT
+      security:
+        - BearerAuth: []
       operationId: iniciarSesion
       requestBody:
         content:
@@ -341,11 +343,65 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /host/{id}:
+    put:
+      summary: Editar perfil desde vista host
+      tags: [Users]
+      operationId: editProfileHost
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+            example: 12344
+      security:
+        - BearerAuth:[]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/updateHostProfileRequest"
+      responses:
+        "200":
+          description: Perfil de host actualizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/updateHostProfileResponse"
+        "400":
+          description: Datos enviados no validos, revisar formato
+          content:
+            schema:
+              $ref: "#/components/schemas/ErrorResponse"
+        "401":
+          description: Credenciales no suficientes para realizar esta accion
+          content:
+            aplication/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: No se encuentra autorizado
+          content:
+            aplication/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Error interno del servidor
+          content:
+            aplication/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+
+
 
   /auth/password:
     post:
       tags: [Auth]
       summary: Solicitar código de recuperación de contraseña
+      security:
+        - BearerAuth: []
       description: Envía un código de recuperación al correo electrónico del usuario. El código expira en 15 minutos.
       requestBody:
         required: true
@@ -383,6 +439,8 @@ paths:
     put:
       tags: [Auth]
       summary: Se cambia la contraseña
+      security:
+        - BearerAuth: []
       requestBody:
         content:
           application/json:
@@ -736,7 +794,37 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/listingMetricsResponse"
-            
+        '400':
+          description: Modo de filtrado no valido
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: No autorizado para realizar esta opcion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '403':
+          description: No tiene credenciales para realizar esta accion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: Alojamiento no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Error interno del servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
 
   /reserves:
     post:
@@ -993,9 +1081,9 @@ paths:
 
 
 
-  /comments/{id}:
+  /comments/listing/{id}:
     post:
-      summary: Crear un nuevo comentario
+      summary: Crear una nueva review desde huesped
       tags: [Comments]
       operationId: createComment
       security:
@@ -1247,6 +1335,55 @@ paths:
 components:
   schemas:
 
+    updateHostProfileRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Juan Cardona
+        numberPhone:
+          type: String
+          example: 1243124124
+        profilePhoto:
+          type: string
+          example: /ruta/photo
+
+        aboutMe:
+          type: string
+          example: soy juan cardona dueño de algunos alojamientos
+        documents:
+          type: string
+          example: documentos legales
+      description: Campos para editar desde perfil host
+
+    updateHostProfileResponse:
+      type: object
+      properties:
+        messague:
+          type: string
+          example: se ha editado con exito
+        error:
+          type: boolean
+          example: false
+        name:
+          type: string
+          example: Juan Cardona
+        numberPhone:
+            type: String
+            example: 1243124124
+        profilePhoto:
+            type: string
+            example: /ruta/photo
+
+        aboutMe:
+            type: string
+            example: soy juan cardona dueño de algunos alojamientos
+        documents:
+            type: string
+            example: documentos legales
+      description: Campos para editar desde perfil host
+
+
     deleteUserRespose:
       type: object
       properties:
@@ -1347,6 +1484,7 @@ components:
           example: "El lugar estaba impecable y el anfitrión fue muy amable."
       required:
         - calificacion
+        - comentario
 
     CommentResponse:
       type: object

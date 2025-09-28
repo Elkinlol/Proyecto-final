@@ -36,7 +36,7 @@ public class Review {
     @Column( nullable = false)
     private LocalDate createdAt;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn( nullable = false)
     private Reply replyAt;
 }

@@ -1,11 +1,12 @@
 package co.avanzada.model;
 
+import co.avanzada.model.enunms.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -27,15 +28,16 @@ public class Reservations {
     @Column(nullable = false)
     private int guestCount;
 
-    @Column(nullable = false)
-    private String listingId;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Listing listings;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;
 
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ReservationStatus reservationsStatus;
 
     @Column(nullable = false, scale = 2)

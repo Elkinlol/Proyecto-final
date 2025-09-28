@@ -5,7 +5,7 @@ import co.avanzada.dtos.promotionDTO.CreatePromotionDTO;
 
 
 public interface PromotionService {
-    String createPromotion( String id,  CreatePromotionDTO createPromotionDTO);
-    String getPromotions( String id);
+    void createPromotion( String id,  CreatePromotionDTO createPromotionDTO);
+    void getPromotions( String id);
 
 }

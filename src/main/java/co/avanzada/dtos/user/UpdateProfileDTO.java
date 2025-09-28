@@ -1,6 +1,6 @@
 package co.avanzada.dtos.user;
 
-import co.avanzada.model.Rol;
+import co.avanzada.model.enunms.Rol;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -8,8 +8,6 @@ import lombok.Setter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -2,13 +2,14 @@ package co.avanzada.model;
 
 
 
+import co.avanzada.model.enunms.Services;
+import co.avanzada.model.enunms.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -40,17 +41,16 @@ public class Listing {
     private LocalDate creationDate;
 
     @OneToOne
-    @Column(nullable = false)
     private Adress adress;
 
-    @OneToMany
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Host host;
 
     @Column(nullable = false)
     private BigDecimal nightlyPrice;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @Column(nullable = false)
@@ -59,6 +59,9 @@ public class Listing {
     @Column(nullable = false)
     private List<Services> services;
 
-    @OneToMany(mappedBy = "place") //
+    @OneToMany
     private List<Review> reviews;
+
+    @ManyToOne
+    private Promotion promotion;
 }

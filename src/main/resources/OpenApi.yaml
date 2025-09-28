@@ -1181,64 +1181,64 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
                 
                 
-  /comments/{id}/response:
-  post:
-    summary: Responder a un comentario con el rol de  anfitrión
-    tags: [Comments]
-    operationId: replyToComment
-    security:
-      - bearerAuth: [ ]
-    parameters:
-      - name: id
-        in: path
-        required: true
-        description: ID del comentario al que se va a responder
-        schema:
-          type: integer
-          example: 789
-    requestBody:
-      required: true
-      content:
-        application/json:
+  /comments/{id}/reply:
+    post:
+      summary: Responder a un comentario con el rol de  anfitrión
+      tags: [Comments]
+      operationId: replyToComment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del comentario al que se va a responder
           schema:
-            $ref: "#/components/schemas/ReplyRequest"
-    responses:
-      '201':
-        description: Respuesta registrada exitosamente
+            type: integer
+            example: 789
+      requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ReplyResponse"
-      '400':
-        description: Datos inválidos
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
-      '401':
-        description: No autorizado
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
-      '403':
-        description: El usuario no es anfitrión del alojamiento relacionado
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
-      '404':
-        description: Comentario no encontrado
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
-      '500':
-        description: Error de servidor
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ErrorResponse"
+              $ref: "#/components/schemas/ReplyRequest"
+      responses:
+        '201':
+          description: Respuesta registrada exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReplyResponse"
+        '400':
+          description: Datos inválidos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '401':
+          description: No autorizado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '403':
+          description: El usuario no es anfitrión del alojamiento relacionado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '404':
+          description: Comentario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        '500':
+          description: Error de servidor
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
   /listings/{id}/promotion:
     get:

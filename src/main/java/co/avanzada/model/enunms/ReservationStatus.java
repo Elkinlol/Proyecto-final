@@ -1,4 +1,4 @@
-package co.avanzada.model;
+package co.avanzada.model.enunms;
 
 public enum ReservationStatus {
 

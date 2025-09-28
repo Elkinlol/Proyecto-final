@@ -7,50 +7,53 @@ import co.avanzada.dtos.user.LoginUserDTO;
 import co.avanzada.dtos.user.UserDTO;
 import co.avanzada.exception.ConflictException;
 import co.avanzada.exception.UnatorizedException;
+import co.avanzada.mappers.ResetPasswordCodeMapper;
 import co.avanzada.mappers.UserMapper;
 
+import co.avanzada.model.PasswordResetCode;
 import co.avanzada.model.User;
+import co.avanzada.repository.ResetPasswordRepository;
 import co.avanzada.repository.UserRepository;
 import co.avanzada.services.AuthService;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Random;
 
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private final EmailService emailService;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final ResetPasswordCodeMapper resetPasswordCodeMapper;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final ResetPasswordRepository resetPasswordRepository;
+
+
 
     @Override
     public UserDTO createUser(CreateUserDTO createUserDTO)  {
         User user =userMapper.toEntity(createUserDTO);
-        if(userRepository.findByEmail(user.getEmail())!=null){
-            new ConflictException("Este email ya existe");
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new ConflictException("Este email ya existe");
         }
-
         String password = encode(createUserDTO.password());
         user.setPassword(password);
         userRepository.save(user);
-        UserDTO userDTO = userMapper.toUserDTO(user);
-        return userDTO;
+
+        return userMapper.toUserDTO(user);
     }
 
     @Override
     public UserDTO loginUser(LoginUserDTO loginUserDTO) {
-        User user = userRepository.findByEmail(loginUserDTO.email())
-                .orElseThrow(() -> new ChangeSetPersister.NotFoundException("Usuario no encontrado"));*/
+        User user = validateEmail(loginUserDTO.email());
         if(!passwordEncoder.matches(loginUserDTO.password(),user.getPassword())){
-            throw new UnatorizedException("Contraseña incorrecta");
+            throw new UnatorizedException("Creedenciales incorrectas");
         }
-
-        UserDTO userDTO = userMapper.toUserDTO(user);
-
-        return userDTO;
+        return userMapper.toUserDTO(user);
     }
 
     @Override
@@ -60,7 +63,13 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public String resetPassword(ResetPasswordDTO resetPasswordDTO) {
-        return "";
+        User user = validateEmail(resetPasswordDTO.email());
+        String code = generateRestCode();
+        PasswordResetCode passwordResetCode = resetPasswordCodeMapper.toEntity(resetPasswordDTO);
+        passwordResetCode.setCode(code);
+        resetPasswordRepository.save(code);
+        emailService.send(user.getEmail(), "El codigo de recuperacion es: "+ code);
+        return  passwordResetCode.getCode();
     }
 
 
@@ -70,10 +79,16 @@ public class AuthServiceImpl implements AuthService {
         return passwordEncoder.encode(password);
     }
 
-    private boolean IsEmailDuplicated(Email email){
-        if("".equals(email)){
-            return true;
+    private  User validateEmail(String email){
+        if(!userRepository.findByEmail(email).isPresent()){
+            throw new ConflictException("Correo no registrado");
         }
-        return false;
+        User user = userRepository.findByEmail(email).get();
+        return user;
+    }
+
+    private String generateRestCode(){
+        String code = String.format("%05d", new Random().nextInt(100000));
+        return code;
     }
 }

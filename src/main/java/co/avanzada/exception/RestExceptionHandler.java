@@ -22,7 +22,6 @@ public class RestExceptionHandler {
     public ResponseEntity<ResponseDTO<String>> noResourceFoundExceptionHandler(NoResourceFoundException ex){
         return ResponseEntity.status(404).body( new ResponseDTO<>(true, "El recurso solicitado no debe existir") );
     }
-
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDTO<String>> generalExceptionHandler (Exception e){
         return ResponseEntity.internalServerError().body( new ResponseDTO<>(true, e.getMessage()) );

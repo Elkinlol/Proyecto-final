@@ -5,7 +5,7 @@ import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.listings.MetricsDTO;
 import co.avanzada.dtos.listings.CreateListingDTO;
 import co.avanzada.dtos.listings.UpdateListingDTO;
-import co.avanzada.model.Services;
+import co.avanzada.model.enunms.Services;
 import co.avanzada.services.ListingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

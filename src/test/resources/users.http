@@ -2,11 +2,12 @@ POST http://localhost:8082/api/auth
 Content-Type: application/json
 
 {
-  "fullName": "Carlos Ramirez",
+  "fullName": "",
   "numberPhone": "2131245123",
-  "email": "carlos@email.com",
+  "email": "carlos3@email.com",
   "password": "12Wanda12",
-  "birthday": "2000-08-22"
+  "birthday": "2000-08-22",
+  "rol": ["GUEST" ]
 }
 
 ###
@@ -14,9 +15,43 @@ POST http://localhost:8082/api/auth
 Content-Type: application/json
 
 {
-"fullName": "",
-"numberPhone": "121212",
-"email": "carlos@email.com",
-"password": "12345678",
+  "rol": ["GUEST" ],
+"fullName": "Juan Bermudez",
+"numberPhone": "121M21t2",
+"email": "carlos1@email.com",
+"password": "121M21t2",
 "birthday": "2000-08-22"
+
+}
+
+###
+POST http://localhost:8082/api/auth
+Content-Type: application/json
+
+{
+  "rol": ["GUEST" ],
+  "fullName": "Elkin Bermudez Grajales",
+  "numberPhone": "121M21t2",
+  "email": "elkinlol13@gmail.com",
+  "password": "121M21t2",
+  "birthday": "2000-08-22"
+
+}
+
+###
+POST http://localhost:8082/api/auth/Login
+Content-Type: application/json
+
+{
+  "email": "carlos12@email.com",
+  "password":"121M21t2"
+
+}
+
+###
+PUT http://localhost:8082/api/auth/Change/Password
+Content-Type: application/json
+
+{
+  "email": "elkinlol13@gmail.com"
 }

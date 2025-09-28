@@ -23,5 +23,8 @@ public class Reply {
     @Column(nullable=false)
     private LocalDate createdAt;
 
+    @OneToOne
+    private Review review;
+
 
 }

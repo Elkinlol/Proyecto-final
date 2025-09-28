@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class PromotionServiceImpl implements PromotionService {
     @Override
-    public String createPromotion(String id, CreatePromotionDTO createPromotionDTO) {
-        return "";
+    public void createPromotion(String id, CreatePromotionDTO createPromotionDTO) {
+        return ;
     }
 
     @Override
-    public String getPromotions(String id) {
-        return "";
+    public void getPromotions(String id) {
+        return ;
     }
 }

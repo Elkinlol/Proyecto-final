@@ -2,13 +2,15 @@ package co.avanzada.services;
 
 
 import co.avanzada.dtos.reservs.CreateReserveDTO;
+import co.avanzada.dtos.reservs.ReservDTO;
 
+import java.util.List;
 
 
 public interface ReservationService {
-    String CreateReserve( CreateReserveDTO createReserve);
-    String getReservations(String estado,String checkIn, String checkOut, String page, String pageSize);
-    String getReservation( String id);
-    String deleteReservation( String id);
-    String getListingsByReservation( String id);
+    void CreateReserve( CreateReserveDTO createReserve);
+    List<ReservDTO> getReservations(String estado, String checkIn, String checkOut, String page, String pageSize);
+    ReservDTO getReservation( String id);
+    void deleteReservation( String id);
+    List<ReservDTO> getListingsByReservation( String id);
 }

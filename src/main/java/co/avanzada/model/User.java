@@ -1,29 +1,30 @@
 package co.avanzada.model;
 
+import co.avanzada.model.enunms.Rol;
+import co.avanzada.model.enunms.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 
 @Getter
 @Setter
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="Users")
+@Table(name="users")
 
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable=false, length = 100)
     private String fullName;
@@ -43,12 +44,13 @@ public class User {
     @Column(nullable=false)
     private LocalDate birthday;
 
-    @ElementCollection
-    @Column(nullable=false)
+    @ElementCollection(targetClass = Rol.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
     private Set<Rol> rol;
 
 
-    @Column(nullable=false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     @OneToMany
@@ -56,10 +58,18 @@ public class User {
     private List<Reservations> reservations;
 
     @OneToMany
-    @Column(nullable=false)
     private List<Review> reviews;
 
-    //private Boolean isHost; Como funcionaria? preguntar
-    //Deberia tener tambien una lista de alojamientos?
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Host hostProfile;
+
+    @Column(nullable=false)
+    private Boolean isHost;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PasswordResetCode> resetCodes = new ArrayList<>();
+
+    @OneToMany
+    private List<Listing> listings;
 }
 

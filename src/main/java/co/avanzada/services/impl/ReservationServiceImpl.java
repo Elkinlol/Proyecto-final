@@ -1,33 +1,36 @@
 package co.avanzada.services.impl;
 
 import co.avanzada.dtos.reservs.CreateReserveDTO;
+import co.avanzada.dtos.reservs.ReservDTO;
 import co.avanzada.services.ReservationService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
     @Override
-    public String CreateReserve(CreateReserveDTO createReserve) {
-        return "";
+    public void CreateReserve(CreateReserveDTO createReserve) {
+        return ;
     }
 
     @Override
-    public String getReservations(String estado, String checkIn, String checkOut, String page, String pageSize) {
-        return "";
+    public List<ReservDTO> getReservations(String estado, String checkIn, String checkOut, String page, String pageSize) {
+        return null;
     }
 
     @Override
-    public String getReservation(String id) {
-        return "";
+    public ReservDTO getReservation(String id) {
+        return null;
     }
 
     @Override
-    public String deleteReservation(String id) {
-        return "";
+    public void deleteReservation(String id) {
+        return ;
     }
 
     @Override
-    public String getListingsByReservation(String id) {
-        return "";
+    public List<ReservDTO> getListingsByReservation(String id) {
+        return null;
     }
 }

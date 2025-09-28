@@ -1,9 +1,12 @@
 package co.avanzada.services;
 
 import co.avanzada.dtos.review.CreateReviewDTO;
+import co.avanzada.dtos.review.ReviewDTO;
+
+import java.util.List;
 
 
 public interface ReviewService {
-    String createReview( CreateReviewDTO reviewDTO);
-    String getReview( String id);
+    void createReview( CreateReviewDTO reviewDTO);
+    List<ReviewDTO> getReview(String id);
 }

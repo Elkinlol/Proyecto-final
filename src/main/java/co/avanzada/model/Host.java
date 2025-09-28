@@ -27,8 +27,4 @@ public class Host {
     @OneToOne
     @JoinColumn(nullable=false)
     private User user;
-
-    @OneToMany
-    @Column(nullable=false)
-    private List<Listing> listings;
 }

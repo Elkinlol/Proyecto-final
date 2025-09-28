@@ -1,8 +1,10 @@
 package co.avanzada.controllers;
 
+import co.avanzada.dtos.LoginResponseDTO;
 import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.auth.RequestResetPasswordDTO;
 import co.avanzada.dtos.auth.ResetPasswordDTO;
+import co.avanzada.dtos.extras.ResponseUserDTO;
 import co.avanzada.dtos.user.CreateUserDTO;
 import co.avanzada.dtos.user.LoginUserDTO;
 import co.avanzada.dtos.user.UserDTO;
@@ -21,16 +23,18 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public ResponseEntity<ResponseDTO<UserDTO>> createUser(@Valid @RequestBody CreateUserDTO createUserDTO){
+    public ResponseEntity<ResponseUserDTO<UserDTO>> createUser(@Valid @RequestBody CreateUserDTO createUserDTO){
         UserDTO userDTO= authService.createUser(createUserDTO);
-        ResponseDTO responseDTO= new ResponseDTO(true, userDTO );
-        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);//Falta la respuesta 409
+        ResponseUserDTO responseDTO= new ResponseUserDTO(true, " Usuario creado con exito", userDTO );
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
     @PostMapping("/Login")
-    public ResponseEntity<ResponseDTO<UserDTO>> loginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
+    public ResponseEntity<ResponseUserDTO<LoginResponseDTO>> loginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
 
         UserDTO userDTO = authService.loginUser(loginUserDTO);
-        return ResponseEntity.ok().body(new ResponseDTO(true, userDTO));
+        LoginResponseDTO loginResponseDTO= new LoginResponseDTO(userDTO);
+        ResponseUserDTO responseDTO = new ResponseUserDTO<>(true, "Se ha iniciado sesion",  loginResponseDTO);
+        return ResponseEntity.ok().body(responseDTO);
     }
     @PostMapping("Password")
     public ResponseEntity<ResponseDTO<String>> requestResetPassword(@Valid @RequestBody RequestResetPasswordDTO resetPasswordDTO){

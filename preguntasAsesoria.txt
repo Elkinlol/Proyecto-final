@@ -1,0 +1,3 @@
+ -Sesion persistente jwt
+ -Servicio de imagenes
+ -Endpoints faltantes

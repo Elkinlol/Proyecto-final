@@ -14,7 +14,7 @@ import java.util.List;
 
 public record ListingDTO(
         @NotBlank @Length (max = 70) String title,
-        @Valid @NotNull User user,
+        @Valid @NotNull Host user,
         @NotBlank @Length(max=500)  String description,
         @NotNull BigDecimal nightlyPrice,
         @NotNull Integer maxGuest,

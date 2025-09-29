@@ -55,3 +55,14 @@ Content-Type: application/json
 {
   "email": "elkinlol13@gmail.com"
 }
+
+###
+POST http://localhost:8082/api/auth/Password
+Content-Type: application/json
+
+{
+  "newPassword": "12Elkin132",
+  "recuperationCode": "07109",
+  "email": "elkinlol13@gmail.com"
+
+}

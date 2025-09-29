@@ -18,7 +18,8 @@ public class UserController {
 
     private final UserService userService;
 
-
+    //añadir update host
+    //añadir getProfileHost
     @PatchMapping("/{id}/password")
     public ResponseEntity <ResponseDTO<String>> updatePassword(@Valid @RequestBody UpdatePasswordDTO request, @PathVariable String id ){
         userService.updatePassword(request,id);

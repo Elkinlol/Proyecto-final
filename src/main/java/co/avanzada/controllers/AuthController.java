@@ -1,6 +1,6 @@
 package co.avanzada.controllers;
 
-import co.avanzada.dtos.LoginResponseDTO;
+import co.avanzada.dtos.auth.LoginResponseDTO;
 import co.avanzada.dtos.extras.ResponseDTO;
 import co.avanzada.dtos.auth.RequestResetPasswordDTO;
 import co.avanzada.dtos.auth.ResetPasswordDTO;
@@ -39,12 +39,12 @@ public class AuthController {
     @PostMapping("Password")
     public ResponseEntity<ResponseDTO<String>> requestResetPassword(@Valid @RequestBody RequestResetPasswordDTO resetPasswordDTO){
         authService.requestResetPassword(resetPasswordDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new ResponseDTO<>(true, "Contraseña cambiada"));
     }
     @PutMapping("/Change/Password")
     public ResponseEntity<ResponseDTO<String>> resetPassword(@Valid  @RequestBody ResetPasswordDTO resetPasswordDTO){
         authService.resetPassword(resetPasswordDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(new ResponseDTO<>(true, "codigo enviado"));
     }
 
 }

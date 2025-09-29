@@ -6,6 +6,7 @@ import co.avanzada.dtos.user.CreateUserDTO;
 import co.avanzada.dtos.user.LoginUserDTO;
 import co.avanzada.dtos.user.UserDTO;
 import co.avanzada.exception.ConflictException;
+import co.avanzada.exception.ResourceNotFoundException;
 import co.avanzada.exception.UnatorizedException;
 import co.avanzada.mappers.ResetPasswordCodeMapper;
 import co.avanzada.mappers.UserMapper;
@@ -16,11 +17,16 @@ import co.avanzada.repository.ResetPasswordRepository;
 import co.avanzada.repository.UserRepository;
 import co.avanzada.services.AuthService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Random;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -57,18 +63,40 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public String requestResetPassword(RequestResetPasswordDTO resetPasswordDTO) {
-        return "";
+    public void requestResetPassword(RequestResetPasswordDTO resetPasswordDTO) {
+        User user = validateEmail(resetPasswordDTO.email());
+        Optional<PasswordResetCode> passwordResetCode= resetPasswordRepository.findByUserAndCode(user, resetPasswordDTO.recuperationCode());
+        if(!passwordResetCode.isPresent()){
+            throw new ResourceNotFoundException("El codigo enviado es erroneo");
+        }
+        LocalDateTime now = LocalDateTime.now();
+        PasswordResetCode code = passwordResetCode.get();
+        if(code.getExpiresAt().isBefore(now)){
+            throw new ConflictException("El codigo enviado ha expirado, solicitar uno nuevo");
+        }
+        /*if(!passwordEncoder.matches(resetPasswordDTO.newPassword(), user.getPassword())){
+            throw new UnatorizedException("Contraseña igual a la anterior");
+        }*/
+        String password = encode(resetPasswordDTO.newPassword());
+        user.setPassword(password);
+        userRepository.save(user);
+        resetPasswordRepository.delete(code);
+        return ;
     }
 
     @Override
     public String resetPassword(ResetPasswordDTO resetPasswordDTO) {
         User user = validateEmail(resetPasswordDTO.email());
         String code = generateRestCode();
-        PasswordResetCode passwordResetCode = resetPasswordCodeMapper.toEntity(resetPasswordDTO);
+        PasswordResetCode passwordResetCode = resetPasswordCodeMapper.toEntity(user, code);
         passwordResetCode.setCode(code);
-        resetPasswordRepository.save(code);
-        emailService.send(user.getEmail(), "El codigo de recuperacion es: "+ code);
+        resetPasswordRepository.save(passwordResetCode);
+        try {
+            emailService.send(user.getEmail(), "El código de recuperación es: " + code);
+        } catch (Exception e) {
+            // Loguea el error, pero no interrumpas la ejecución
+            log.error("No se pudo enviar el correo a " + user.getEmail(), e);
+        }
         return  passwordResetCode.getCode();
     }
 
@@ -81,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
 
     private  User validateEmail(String email){
         if(!userRepository.findByEmail(email).isPresent()){
-            throw new ConflictException("Correo no registrado");
+            throw new UnatorizedException("Correo no registrado");
         }
         User user = userRepository.findByEmail(email).get();
         return user;

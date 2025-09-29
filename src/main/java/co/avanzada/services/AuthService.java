@@ -11,7 +11,7 @@ public interface AuthService {
 
     UserDTO createUser(CreateUserDTO createUserDTO);
     UserDTO loginUser( LoginUserDTO loginUserDTO);
-    String requestResetPassword( RequestResetPasswordDTO resetPasswordDTO);
+    void requestResetPassword( RequestResetPasswordDTO resetPasswordDTO);
     String resetPassword( ResetPasswordDTO resetPasswordDTO);
 
 }

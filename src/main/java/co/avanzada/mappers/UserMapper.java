@@ -1,13 +1,13 @@
 package co.avanzada.mappers;
 
+import co.avanzada.dtos.listings.UpdateListingDTO;
 import co.avanzada.dtos.user.CreateUserDTO;
+import co.avanzada.dtos.user.UpdateProfileDTO;
 import co.avanzada.dtos.user.UserDTO;
+import co.avanzada.model.Listing;
 import co.avanzada.model.User;
 import co.avanzada.model.enunms.Rol;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 import java.util.Set;
 
@@ -26,4 +26,7 @@ public interface UserMapper {
 
 
     UserDTO toUserDTO(User user);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateUserFromDTO(UpdateProfileDTO dto, @MappingTarget User entity);
 }

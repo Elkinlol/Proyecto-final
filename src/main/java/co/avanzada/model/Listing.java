@@ -5,11 +5,11 @@ package co.avanzada.model;
 import co.avanzada.model.enunms.Services;
 import co.avanzada.model.enunms.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.mapstruct.Mapper;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -22,8 +22,7 @@ import java.util.List;
 
 public class Listing {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
     @Column(nullable = false, length = 70)
     private  String title;
@@ -34,11 +33,11 @@ public class Listing {
     @Column(nullable = false, length = 500)
     private  String url;
 
-    @Column(nullable = false)
+    @ElementCollection @Size(min = 1, max= 10)
     private List<String> image;
 
     @Column(nullable = false)
-    private LocalDate creationDate;
+    private LocalDateTime creationDate;
 
     @OneToOne
     private Adress adress;
@@ -56,7 +55,7 @@ public class Listing {
     @Column(nullable = false)
     private Integer maxGuest;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private List<Services> services;
 
     @OneToMany

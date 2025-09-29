@@ -3,6 +3,7 @@ package co.avanzada.mappers;
 import co.avanzada.dtos.auth.RequestResetPasswordDTO;
 import co.avanzada.dtos.auth.ResetPasswordDTO;
 import co.avanzada.model.PasswordResetCode;
+import co.avanzada.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
@@ -16,7 +17,7 @@ public interface ResetPasswordCodeMapper {
     @Mapping(target = "expiresAt", expression = "java(java.time.LocalDateTime.now().plusMinutes(15))")
     @Mapping(target = "id", expression = "java(java.util.UUID.randomUUID().toString())")
 
-    PasswordResetCode toEntity(ResetPasswordDTO resetPasswordDTO);
+    PasswordResetCode toEntity(User user, String code);
 
     RequestResetPasswordDTO toDTO(PasswordResetCode entity);
 

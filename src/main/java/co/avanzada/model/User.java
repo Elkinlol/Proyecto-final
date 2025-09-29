@@ -24,7 +24,7 @@ import java.util.UUID;
 
 public class User {
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(nullable=false, length = 100)
     private String fullName;

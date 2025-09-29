@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -32,7 +35,7 @@ public class ListingController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity <ResponseDTO<String>>  updateListing(@PathVariable String id, @Valid @RequestBody UpdateListingDTO UpdateListing){
         listingService.updateListing(id, UpdateListing);
         return ResponseEntity.ok().build();
@@ -52,12 +55,12 @@ public class ListingController {
 
     @GetMapping ("/search")
     public ResponseEntity<List<ResponseDTO<String>>> getListingBySearch(@RequestParam(required = false) String city,
-                                                            @RequestParam(required = false) String checkIn,
-                                                            @RequestParam(required = false) String checkOut,
-                                                            @RequestParam(required = false) Float  nightlyPrice,
-                                                            @RequestParam (required = false) List<Services> servicesList)
+                                                            @RequestParam(required = false) LocalDate checkIn,
+                                                            @RequestParam(required = false) LocalDate checkOut,
+                                                            @RequestParam(required = false) BigDecimal nightlyPrice,
+                                                            @RequestParam (required = false) List<Services> servicesList, @RequestParam int page)
     {
-        listingService.getListingBySearch( city,  checkIn,  checkOut,  nightlyPrice, servicesList );
+        listingService.getListingBySearch( city,  checkIn,  checkOut,  nightlyPrice, servicesList, page );
         return ResponseEntity.ok().build();
     }
 

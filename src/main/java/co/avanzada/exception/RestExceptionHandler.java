@@ -24,7 +24,7 @@ public class RestExceptionHandler {
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ResponseDTO<String>> generalExceptionHandler (Exception e){
-        return ResponseEntity.internalServerError().body( new ResponseDTO<>(true, e.getMessage()) );
+        return ResponseEntity.internalServerError().body( new ResponseDTO<>(false, e.getMessage()) );
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -34,7 +34,7 @@ public class RestExceptionHandler {
         for (FieldError e: results.getFieldErrors()) {
             errors.add( new ValidationDTO(e.getField(), e.getDefaultMessage()) );
         }
-        return ResponseEntity.badRequest().body( new ResponseDTO<>(true, errors) );
+        return ResponseEntity.badRequest().body( new ResponseDTO<>(false, errors) );
     }
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ResponseDTO<String>> handleNotFound(ResourceNotFoundException ex) {

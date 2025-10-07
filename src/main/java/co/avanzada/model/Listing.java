@@ -43,8 +43,8 @@ public class Listing {
     private Adress adress;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
-    private Host host;
+    @JoinColumn(name = "host_id", referencedColumnName = "id", nullable = false)
+    private User host;
 
     @Column(nullable = false)
     private BigDecimal nightlyPrice;

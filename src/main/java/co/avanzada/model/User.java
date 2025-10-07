@@ -53,6 +53,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Column(nullable = false)
+    private String profilePhoto;
+
     @OneToMany
     @Column(nullable=false)
     private List<Reservations> reservations;
@@ -60,8 +63,8 @@ public class User {
     @OneToMany
     private List<Review> reviews;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Host hostProfile;
+    @Embedded
+    private Host host;
 
     @Column(nullable=false)
     private Boolean isHost;

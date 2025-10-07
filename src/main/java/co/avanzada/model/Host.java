@@ -10,13 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-
+@Embeddable
 public class Host {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(nullable = false, length = 500)
     private  String aboutMe;
@@ -24,7 +19,4 @@ public class Host {
     @Column(nullable = false, length = 500)
     private  String documents;
 
-    @OneToOne
-    @JoinColumn(nullable=false)
-    private User user;
 }

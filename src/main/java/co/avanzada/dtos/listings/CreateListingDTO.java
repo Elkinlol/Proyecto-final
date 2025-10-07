@@ -10,8 +10,7 @@ import java.util.List;
 
 public record CreateListingDTO(
         @NotBlank @Length (max =100)  String title,
-        @Valid  @NotNull Adress adress,
-        @Valid  @NotNull Host user,
+        @Valid  @NotNull AddressDTO adress,
         @NotNull @DecimalMin("0.1") BigDecimal nightlyPrice,
         @NotEmpty @NotNull @Min(1) int maxGuest,
         @NotBlank @Length(max = 500) String description,

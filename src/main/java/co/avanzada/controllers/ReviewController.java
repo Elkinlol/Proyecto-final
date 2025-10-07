@@ -26,4 +26,9 @@ public class ReviewController {
     }
     // añadir el reply de host
 
+    @PostMapping("/host")
+    public ResponseEntity <ResponseDTO<String>> replyReview(@Valid @RequestBody CreateReviewDTO createReviewDTO){
+        return ResponseEntity.ok().build();
+    }
+
 }

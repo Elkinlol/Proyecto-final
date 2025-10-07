@@ -2,6 +2,8 @@ package co.avanzada.controllers;
 
 
 import co.avanzada.dtos.extras.ResponseDTO;
+import co.avanzada.dtos.extras.ResponseUserDTO;
+import co.avanzada.dtos.listings.ListingDTO;
 import co.avanzada.dtos.listings.MetricsDTO;
 import co.avanzada.dtos.listings.CreateListingDTO;
 import co.avanzada.dtos.listings.UpdateListingDTO;
@@ -9,6 +11,7 @@ import co.avanzada.model.enunms.Services;
 import co.avanzada.services.ListingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +32,9 @@ public class ListingController {
 
 
     @PostMapping
-    public ResponseEntity <ResponseDTO<String>> createListing(@Valid @RequestBody CreateListingDTO createListing){
-        listingService.createListing(createListing);
-
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity <ResponseUserDTO<ListingDTO>> createListing(@Valid @RequestBody CreateListingDTO createListing){
+        ListingDTO listingDto = listingService.createListing(createListing);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseUserDTO(false, "Alojamiento creado correctamente", listingDto ));
     }
 
     @PatchMapping("/{id}")
@@ -54,14 +56,14 @@ public class ListingController {
     }
 
     @GetMapping ("/search")
-    public ResponseEntity<List<ResponseDTO<String>>> getListingBySearch(@RequestParam(required = false) String city,
-                                                            @RequestParam(required = false) LocalDate checkIn,
-                                                            @RequestParam(required = false) LocalDate checkOut,
-                                                            @RequestParam(required = false) BigDecimal nightlyPrice,
-                                                            @RequestParam (required = false) List<Services> servicesList, @RequestParam int page)
+    public ResponseEntity<ResponseUserDTO<Page<ListingDTO>>> getListingBySearch(@RequestParam(required = false) String city,
+                                                                                      @RequestParam(required = false) LocalDate checkIn,
+                                                                                      @RequestParam(required = false) LocalDate checkOut,
+                                                                                      @RequestParam(required = false) BigDecimal nightlyPrice,
+                                                                                      @RequestParam (required = false) List<Services> servicesList, @RequestParam int page)
     {
-        listingService.getListingBySearch( city,  checkIn,  checkOut,  nightlyPrice, servicesList, page );
-        return ResponseEntity.ok().build();
+        Page<ListingDTO> listings = listingService.getListingBySearch( city,  checkIn,  checkOut,  nightlyPrice, servicesList, page );
+        return ResponseEntity.ok().body(new ResponseUserDTO(false, "Se encontraron las siguiente", listings));
     }
 
     @GetMapping("/{id}/metrics")
@@ -69,6 +71,13 @@ public class ListingController {
                                                  @RequestParam (required = false) String endDate){
         //MetricsDTO metricts = listingService.getMetrics(id, startDate, endDate);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<ResponseDTO<List<ListingDTO>>> getListings(@RequestParam int page){
+        listingService.getListingFromHost(page);
+        return ResponseEntity.ok().build();
+
     }
 
 }

@@ -1,7 +1,22 @@
 ###
 POST http://localhost:8082/api/listings
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MTMyLCJleHAiOjE3NTk4NjA3MzJ9.84hblgKn852n_vBmfEb0wJo8ERZFLgJSyTQA9iNtI6LkpcR78FKXpisTDcxu4dYt
 
 {
-
+  "title": "Apartamento moderno con vista al mar",
+  "adress": {
+    "adress": "Carrera 43A #1-50",
+    "city": "Cartagena",
+    "latitud": "10.3910",
+    "longitud": "-75.4794"
+  },
+  "nightlyPrice": 250000.00,
+  "maxGuest": 4,
+  "description": "Hermoso apartamento frente al mar con balcón privado, aire acondicionado y piscina compartida. Ideal para familias o parejas que deseen disfrutar de la brisa caribeña.",
+  "images": [
+    "https://example.com/images/apto1.jpg",
+    "https://example.com/images/apto2.jpg",
+    "https://example.com/images/apto3.jpg"
+  ]
 }

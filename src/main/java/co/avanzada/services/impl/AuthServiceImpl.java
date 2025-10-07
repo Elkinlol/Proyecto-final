@@ -1,5 +1,6 @@
 package co.avanzada.services.impl;
 
+import co.avanzada.dtos.auth.LoginResponseDTO;
 import co.avanzada.dtos.auth.RequestResetPasswordDTO;
 import co.avanzada.dtos.auth.ResetPasswordDTO;
 import co.avanzada.dtos.user.CreateUserDTO;
@@ -13,16 +14,19 @@ import co.avanzada.mappers.UserMapper;
 
 import co.avanzada.model.PasswordResetCode;
 import co.avanzada.model.User;
+import co.avanzada.model.enunms.Status;
 import co.avanzada.repository.ResetPasswordRepository;
 import co.avanzada.repository.UserRepository;
+import co.avanzada.security.JWTUtils;
 import co.avanzada.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -32,11 +36,12 @@ import java.util.Random;
 public class AuthServiceImpl implements AuthService {
 
     private final EmailService emailService;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     private final ResetPasswordCodeMapper resetPasswordCodeMapper;
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final ResetPasswordRepository resetPasswordRepository;
+    private final JWTUtils jwtUtils;
 
 
 
@@ -49,17 +54,21 @@ public class AuthServiceImpl implements AuthService {
         String password = encode(createUserDTO.password());
         user.setPassword(password);
         userRepository.save(user);
-
         return userMapper.toUserDTO(user);
     }
 
     @Override
-    public UserDTO loginUser(LoginUserDTO loginUserDTO) {
+    public LoginResponseDTO  loginUser(LoginUserDTO loginUserDTO) {
         User user = validateEmail(loginUserDTO.email());
         if(!passwordEncoder.matches(loginUserDTO.password(),user.getPassword())){
             throw new UnatorizedException("Creedenciales incorrectas");
         }
-        return userMapper.toUserDTO(user);
+        /*PREGUNTARif(user.getStatus().equals(Status.INACTIVE)){
+            throw new UnatorizedException("Cuenta inactiva");
+        }*/
+        String rol = user.getRol().iterator().next().name();
+        String token = jwtUtils.generateToken(user.getId(), Map.of("rol", rol));
+        return  new LoginResponseDTO (userMapper.toUserDTO(user), token) ;
     }
 
     @Override
@@ -74,9 +83,9 @@ public class AuthServiceImpl implements AuthService {
         if(code.getExpiresAt().isBefore(now)){
             throw new ConflictException("El codigo enviado ha expirado, solicitar uno nuevo");
         }
-        /*if(!passwordEncoder.matches(resetPasswordDTO.newPassword(), user.getPassword())){
+        if(passwordEncoder.matches(resetPasswordDTO.newPassword(), user.getPassword())){
             throw new UnatorizedException("Contraseña igual a la anterior");
-        }*/
+        }
         String password = encode(resetPasswordDTO.newPassword());
         user.setPassword(password);
         userRepository.save(user);
@@ -94,7 +103,7 @@ public class AuthServiceImpl implements AuthService {
         try {
             emailService.send(user.getEmail(), "El código de recuperación es: " + code);
         } catch (Exception e) {
-            // Loguea el error, pero no interrumpas la ejecución
+            // Loguea el error, pero no interrumpe la ejecución
             log.error("No se pudo enviar el correo a " + user.getEmail(), e);
         }
         return  passwordResetCode.getCode();

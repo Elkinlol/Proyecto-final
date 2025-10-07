@@ -1,0 +1,72 @@
+PUT http://localhost:8082/api/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0ZmM4LTRmZjktNGI3ZS04YTEzLTdjODZhYjcwODc5MyIsImlhdCI6MTc1OTgwNzUwNCwiZXhwIjoxNzU5ODExMTA0fQ.Ysj9j9_XhIJ9rQRumui6pGcbsOgrhyoJSwkfomGpKlLuTE1ZzP9749HevxLsmbq6
+
+{
+  "fullName": "Elkin Bermudez Grajales1",
+  "numberPhone": "3218982192",
+  "profilePhoto": "https://www.pinterest.com/bobbie3jo/lol-dolls/"
+}
+
+###
+DELETE http://localhost:8082/api/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0ZmM4LTRmZjktNGI3ZS04YTEzLTdjODZhYjcwODc5MyIsImlhdCI6MTc1OTgwNzUwNCwiZXhwIjoxNzU5ODExMTA0fQ.Ysj9j9_XhIJ9rQRumui6pGcbsOgrhyoJSwkfomGpKlLuTE1ZzP9749HevxLsmbq6
+
+{
+}
+
+###
+PATCH http://localhost:8082/api/user/password
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0ZmM4LTRmZjktNGI3ZS04YTEzLTdjODZhYjcwODc5MyIsImlhdCI6MTc1OTgwNzUwNCwiZXhwIjoxNzU5ODExMTA0fQ.Ysj9j9_XhIJ9rQRumui6pGcbsOgrhyoJSwkfomGpKlLuTE1ZzP9749HevxLsmbq6
+
+{
+  "oldPassword": "121M21t2",
+  "newPassword": "12wAnda12"
+}
+
+###
+PUT http://localhost:8082/api/user/host
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MTMyLCJleHAiOjE3NTk4NjA3MzJ9.84hblgKn852n_vBmfEb0wJo8ERZFLgJSyTQA9iNtI6LkpcR78FKXpisTDcxu4dYt
+
+{
+  "aboutMe": "Soy elkin el anfitrion pro",
+  "documents": "Anexo1"
+}
+
+###
+GET http://localhost:8082/api/user
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODUyNTU1LCJleHAiOjE3NTk4NTYxNTV9.FSJfanJG0vaDPac5TOUqrYii28WD2_1sIEF3l9JFbTJYc1dsbMxMItLKqOpkJZed
+
+{
+
+}
+
+###
+GET http://localhost:8082/api/user/host
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MTMyLCJleHAiOjE3NTk4NjA3MzJ9.84hblgKn852n_vBmfEb0wJo8ERZFLgJSyTQA9iNtI6LkpcR78FKXpisTDcxu4dYt
+
+{
+
+}
+
+###
+PATCH http://localhost:8082/api/user/host
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MDc5LCJleHAiOjE3NTk4NjA2Nzl9.96b6sy8ZrAdx9WgvLraIZQ9TpqugGqYruXWGt7tBfKwrCVbv1Q9cUAIcO_GsWphr
+
+{
+}
+
+###
+PATCH http://localhost:8082/api/user/guest
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MDc5LCJleHAiOjE3NTk4NjA2Nzl9.96b6sy8ZrAdx9WgvLraIZQ9TpqugGqYruXWGt7tBfKwrCVbv1Q9cUAIcO_GsWphr
+
+{
+
+}

@@ -2,9 +2,9 @@ POST http://localhost:8082/api/auth
 Content-Type: application/json
 
 {
-  "fullName": "",
-  "numberPhone": "2131245123",
-  "email": "carlos3@email.com",
+  "fullName": "Willito vergara",
+  "numberPhone": "3218982391",
+  "email": "vergarwillinton04@gmail.com",
   "password": "12Wanda12",
   "birthday": "2000-08-22",
   "rol": ["GUEST" ]
@@ -39,17 +39,24 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8082/api/auth/Login
+POST http://localhost:8082/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "carlos12@email.com",
-  "password":"121M21t2"
+  "email": "vergarwillinton04@gmail.com",
+  "password":"12Wanda12"
 
 }
-
 ###
-PUT http://localhost:8082/api/auth/Change/Password
+POST http://localhost:8082/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "elkinlol13@gmail.com",
+  "password": "12wAnda12"
+}
+###
+PUT http://localhost:8082/api/auth/change/password
 Content-Type: application/json
 
 {
@@ -57,12 +64,20 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8082/api/auth/Password
+PUT http://localhost:8082/api/auth/change/password
 Content-Type: application/json
 
 {
-  "newPassword": "12Elkin132",
-  "recuperationCode": "07109",
+  "email": "vergarawillinton04@gmail.com"
+}
+
+###
+POST http://localhost:8082/api/auth/password
+Content-Type: application/json
+
+{
+  "newPassword": "12Elkin13",
+  "recuperationCode": "64728",
   "email": "elkinlol13@gmail.com"
 
 }

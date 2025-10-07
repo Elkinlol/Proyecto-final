@@ -21,4 +21,5 @@ public interface ListingService {
     Page <ListingDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
                                          BigDecimal nightlyPrice, List<Services> servicesList, int page);
     MetricsDTO getMetrics(String id, String startDate, String endDate);
+    Page <ListingDTO> getListingFromHost(int page);
 }

@@ -19,5 +19,5 @@ public record ListingDTO(
         @NotNull BigDecimal nightlyPrice,
         @NotNull Integer maxGuest,
         @NotNull @Size(min = 1, max =10) List<String> images,
-        @NotNull Adress adress) {
+        @NotNull AddressDTO adress) {
 }

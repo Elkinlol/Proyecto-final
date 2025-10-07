@@ -32,4 +32,6 @@ public class Adress {
     @JoinColumn(nullable = false)
     private Listing listing;
 
+
+
 }

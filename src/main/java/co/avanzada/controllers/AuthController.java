@@ -28,20 +28,18 @@ public class AuthController {
         ResponseUserDTO responseDTO= new ResponseUserDTO(true, " Usuario creado con exito", userDTO );
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
     }
-    @PostMapping("/Login")
+    @PostMapping("/login")
     public ResponseEntity<ResponseUserDTO<LoginResponseDTO>> loginUser(@Valid @RequestBody LoginUserDTO loginUserDTO){
-
-        UserDTO userDTO = authService.loginUser(loginUserDTO);
-        LoginResponseDTO loginResponseDTO= new LoginResponseDTO(userDTO);
+        LoginResponseDTO loginResponseDTO= authService.loginUser(loginUserDTO);
         ResponseUserDTO responseDTO = new ResponseUserDTO<>(true, "Se ha iniciado sesion",  loginResponseDTO);
         return ResponseEntity.ok().body(responseDTO);
     }
-    @PostMapping("Password")
+    @PostMapping("password")
     public ResponseEntity<ResponseDTO<String>> requestResetPassword(@Valid @RequestBody RequestResetPasswordDTO resetPasswordDTO){
         authService.requestResetPassword(resetPasswordDTO);
         return ResponseEntity.ok().body(new ResponseDTO<>(true, "Contraseña cambiada"));
     }
-    @PutMapping("/Change/Password")
+    @PutMapping("/change/password")
     public ResponseEntity<ResponseDTO<String>> resetPassword(@Valid  @RequestBody ResetPasswordDTO resetPasswordDTO){
         authService.resetPassword(resetPasswordDTO);
         return ResponseEntity.ok().body(new ResponseDTO<>(true, "codigo enviado"));

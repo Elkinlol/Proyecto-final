@@ -1,13 +1,17 @@
 package co.avanzada.services;
 
-import co.avanzada.dtos.user.UpdatePasswordDTO;
-import co.avanzada.dtos.user.UpdateProfileDTO;
+import co.avanzada.dtos.user.*;
 import co.avanzada.model.User;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
-    Void updateUser ( UpdateProfileDTO updateProfileDTO, String id);
-    User findUserById( String id);
-    Void updatePassword( UpdatePasswordDTO request,  String id );
-    Void deleteUser(  String id);
+    UserDTO updateUser (UpdateProfileDTO updateProfileDTO);
+    UserDTO findUserById( );
+    Void updatePassword( UpdatePasswordDTO request );
+    Void deleteUser( );
+    String  upgradeToHost();
+    HostDTO findHost();
+    HostDTO updateHost(UpdateProfileHostDTO updateProfileHostDTO );
+    void upgradeToGuest();
 }

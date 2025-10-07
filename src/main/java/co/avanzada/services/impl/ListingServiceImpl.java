@@ -3,14 +3,20 @@ import co.avanzada.dtos.listings.ListingDTO;
 import co.avanzada.dtos.listings.MetricsDTO;
 import co.avanzada.dtos.listings.CreateListingDTO;
 import co.avanzada.dtos.listings.UpdateListingDTO;
+import co.avanzada.exception.ConflictException;
 import co.avanzada.exception.ResourceNotFoundException;
 import co.avanzada.exception.UnatorizedException;
 import co.avanzada.mappers.ListingMapper;
+import co.avanzada.model.Adress;
 import co.avanzada.model.Host;
 import co.avanzada.model.Listing;
+import co.avanzada.model.User;
 import co.avanzada.model.enunms.Services;
 import co.avanzada.model.enunms.Status;
+import co.avanzada.repository.AdressRepository;
 import co.avanzada.repository.ListingRepository;
+import co.avanzada.repository.UserRepository;
+import co.avanzada.security.AuthUtils;
 import co.avanzada.services.ListingService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +32,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @RequiredArgsConstructor
@@ -34,12 +41,27 @@ import java.util.List;
 public class ListingServiceImpl implements ListingService {
     private final ListingRepository listingRepository;
     private final ListingMapper listingMapper;
-
+    private final UserRepository userRepository;
+    private final AdressRepository  adressRepository;
+    private final AuthUtils authUtils;
+    private final int pageSize =10;
 
     @Override
     public ListingDTO createListing(CreateListingDTO createListingDTO) {
-        Host host = createListingDTO.user();
+        String id = authUtils.getCurrentUserId();
+        User  user = getUserById(id);
         Listing listing = listingMapper.toEntity(createListingDTO);
+        listing.setHost(user);
+        Adress adress = Adress.builder()
+                .city(createListingDTO.adress().city())
+                .adress(createListingDTO.adress().adress())
+                .latitud(createListingDTO.adress().latitud())
+                .longitud(createListingDTO.adress().longitud())
+                .build();
+        Adress addressSaved = adressRepository.save(adress);
+
+        listing.setAdress(addressSaved);
+
         listingRepository.save(listing);
         return listingMapper.toDTO(listing);
     }
@@ -69,8 +91,13 @@ public class ListingServiceImpl implements ListingService {
     @Override
     public Page<ListingDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
                                                BigDecimal nightlyPrice, List<Services> servicesList, int page) {
-        Pageable pageable = PageRequest.of(page, 10);
-        Page<Listing> listings= listingRepository.findByFilter(ciudad, fecha1, fecha2, servicesList, pageable, nightlyPrice);
+
+        if(fecha1 != null && fecha2 == null || fecha1 == null && fecha2!=null){
+            throw new ConflictException("Debe enviar las dos fechas");
+        }
+
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Listing> listings= listingRepository.findByFilter(ciudad, fecha1, fecha2, servicesList, nightlyPrice, pageable);
         return listings.map(listingMapper::toDTO);
     }
 
@@ -80,6 +107,13 @@ public class ListingServiceImpl implements ListingService {
         return null;
     }
 
+    @Override
+    public Page<ListingDTO> getListingFromHost(int page) {
+        User  user = getUserById(authUtils.getCurrentUserId());
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Listing> listings = listingRepository.findListingByHost(user, pageable);
+        return listings.map(listingMapper::toDTO);
+    }
 
 
     private Listing findListingById(String id){
@@ -87,5 +121,12 @@ public class ListingServiceImpl implements ListingService {
             throw new ResourceNotFoundException("Alojamiento no encontrado");
         }
         return listingRepository.findById(id).get();
+    }
+
+    private User getUserById(String id) {
+        if(!userRepository.findById(id).isPresent()){
+            throw new ResourceNotFoundException("Usuario no encontrado");
+        }
+        return userRepository.findById(id).get();
     }
 }

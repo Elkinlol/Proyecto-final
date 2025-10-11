@@ -1,17 +1,17 @@
-###
+### Crear un nuevo alojamiento
 POST http://localhost:8082/api/listings
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MTMyLCJleHAiOjE3NTk4NjA3MzJ9.84hblgKn852n_vBmfEb0wJo8ERZFLgJSyTQA9iNtI6LkpcR78FKXpisTDcxu4dYt
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczMjYtMmRhMS00MWU0LWJkOTQtMWYxMWIzNDM5YTRkIiwiaWF0IjoxNzYwMTM0OTE5LCJleHAiOjE3NjAxMzg1MTl9.zxYramFAMzuwEWnpVcAGlVZD0V53ZjFPO7-Fdx2MBVA9zFx8E2NBsGFYOwPAsvc8
 
 {
   "title": "Apartamento moderno con vista al mar",
   "adress": {
     "adress": "Carrera 43A #1-50",
-    "city": "Cartagena",
+    "city": "Bogota",
     "latitud": "10.3910",
     "longitud": "-75.4794"
   },
-  "nightlyPrice": 250000.00,
+  "nightlyPrice": 250000,
   "maxGuest": 4,
   "description": "Hermoso apartamento frente al mar con balcón privado, aire acondicionado y piscina compartida. Ideal para familias o parejas que deseen disfrutar de la brisa caribeña.",
   "images": [
@@ -20,3 +20,97 @@ Authorization: bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmY
     "https://example.com/images/apto3.jpg"
   ]
 }
+
+### Crear un nuevo alojamiento
+POST http://localhost:8082/api/listings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczMjYtMmRhMS00MWU0LWJkOTQtMWYxMWIzNDM5YTRkIiwiaWF0IjoxNzYwMTM0OTE5LCJleHAiOjE3NjAxMzg1MTl9.zxYramFAMzuwEWnpVcAGlVZD0V53ZjFPO7-Fdx2MBVA9zFx8E2NBsGFYOwPAsvc8
+
+{
+"title": "Loft moderno en el centro de Medellín",
+"adress": {
+"adress": "Calle 50 #45-80",
+"city": "Medellín",
+"latitud": "6.2476",
+"longitud": "-75.5658"
+},
+"nightlyPrice": 180000,
+"maxGuest": 2,
+"description": "Moderno loft ubicado cerca del metro, ideal para viajeros urbanos.",
+"images": [
+"https://example.com/images/loft1.jpg",
+"https://example.com/images/loft2.jpg"
+]
+}
+
+### Crear un nuevo alojamiento
+POST http://localhost:8082/api/listings
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczMjYtMmRhMS00MWU0LWJkOTQtMWYxMWIzNDM5YTRkIiwiaWF0IjoxNzYwMTM0OTE5LCJleHAiOjE3NjAxMzg1MTl9.zxYramFAMzuwEWnpVcAGlVZD0V53ZjFPO7-Fdx2MBVA9zFx8E2NBsGFYOwPAsvc8
+
+{
+  "title": "Cabaña rústica en las montañas de Antioquia",
+  "adress": {
+    "adress": "Vereda El Retiro",
+    "city": "Rionegro",
+    "latitud": "6.1455",
+    "longitud": "-75.3822"
+  },
+  "nightlyPrice": 320000,
+  "maxGuest": 6,
+  "description": "Acogedora cabaña con chimenea, jacuzzi y vista panorámica a las montañas.",
+  "images": [
+    "https://example.com/images/cabana1.jpg",
+    "https://example.com/images/cabana2.jpg",
+    "https://example.com/images/cabana3.jpg"
+  ]
+}
+
+
+
+### Editar un alojamiento
+PATCH http://localhost:8082/api/listings/1ad65a81-7134-4b3c-b4d1-09712656d1dd
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiNGIyZWVhZDUtNTlkNy00ZTNiLTlmYWUtMzg0YzQ5NzAyYTBhIiwiaWF0IjoxNzYwMTE0NDk2LCJleHAiOjE3NjAxMTgwOTZ9.99MydziGgQ0QZ6CfzfRuRuRpqwgxWjUpEb1sDmcY-Osaa5PfS2_Vxy5f5v7PxDtF
+
+{
+  "title": "Los mejores"
+}
+
+### Soft delete de un alojamiento
+DELETE http://localhost:8082/api/listings/1ad65a81-7134-4b3c-b4d1-09712656d1dd
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6Ijc2MWFhMjE5LTUzMjUtNGE4ZS1iYzliLTdlZmJkMmM4ZmIzMyIsImlhdCI6MTc1OTg5NDAwNiwiZXhwIjoxNzU5ODk3NjA2fQ.fckXIALgAe6GSmjULEbClcd7JYycmsSrKcSzSH_woO1Zvr5wO1PVftrJfF3OS1RW
+
+{
+}
+
+### Obtener  un alojamiento -- vista detalles usuario
+GET http://localhost:8082/api/listings/28327f54-8014-44a0-9382-137a92ad8932
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDE5NTY4NSwiZXhwIjoxNzYwMTk5Mjg1fQ.vPgScSzsf0Xd4i0nymRsj433d189sa8x0gKoIERqHwBJsiR2YfmetRmzUJFbEvZ1
+
+{
+}
+
+###
+GET http://localhost:8082/api/listings/search?page=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDE5NTY4NSwiZXhwIjoxNzYwMTk5Mjg1fQ.vPgScSzsf0Xd4i0nymRsj433d189sa8x0gKoIERqHwBJsiR2YfmetRmzUJFbEvZ1
+
+{
+
+}
+
+###
+GET http://localhost:8082/api/listings/0a5ac087-91e2-471f-bb7e-612234288806/metrics
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl
+
+{
+}
+
+###
+GET http://localhost:8082/api/listings?page=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl

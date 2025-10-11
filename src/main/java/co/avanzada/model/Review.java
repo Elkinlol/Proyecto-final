@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ public class Review {
     private int rating;
 
     @ManyToOne()
-    @JoinColumn( nullable = false)
+    @JoinColumn(name = "listing_id", referencedColumnName = "id", nullable = false)
     private Listing listing;
 
     @Column(length = 500, nullable = false)
@@ -34,9 +35,9 @@ public class Review {
     private User user;
 
     @Column( nullable = false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @OneToOne
-    @JoinColumn( nullable = false)
+    @JoinColumn
     private Reply replyAt;
 }

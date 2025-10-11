@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Entity
 
 public class Reply {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,5 +27,8 @@ public class Reply {
     @OneToOne
     private Review review;
 
+    @ManyToOne
+    @JoinColumn( name = "host_id", referencedColumnName = "id", nullable = false)
+    private User host;
 
 }

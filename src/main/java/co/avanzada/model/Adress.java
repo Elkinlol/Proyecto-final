@@ -28,8 +28,7 @@ public class Adress {
     @Column(nullable = false)
     private String longitud;
 
-    @OneToOne
-    @JoinColumn(nullable = false)
+    @OneToOne(mappedBy = "adress")
     private Listing listing;
 
 

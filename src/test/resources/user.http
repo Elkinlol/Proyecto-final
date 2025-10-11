@@ -1,14 +1,15 @@
+### Editar perfil desde GUEST
 PUT http://localhost:8082/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0ZmM4LTRmZjktNGI3ZS04YTEzLTdjODZhYjcwODc5MyIsImlhdCI6MTc1OTgwNzUwNCwiZXhwIjoxNzU5ODExMTA0fQ.Ysj9j9_XhIJ9rQRumui6pGcbsOgrhyoJSwkfomGpKlLuTE1ZzP9749HevxLsmbq6
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjQ0NDljYzNkLWIxY2QtNGY5MC05YTBkLTg3NjRkNDc2NWFhNyIsImlhdCI6MTc2MDExODIxNiwiZXhwIjoxNzYwMTIxODE2fQ.-5p8k3V6eWSI8t4bx4rMs-p17PZ-u3Jz1YXJJdmbyblZllX3-cDWnCImFKgXJXN8
 
 {
-  "fullName": "Elkin Bermudez Grajales1",
-  "numberPhone": "3218982192",
+  "fullName": "Willian ",
+  "numberPhone": "3218982342",
   "profilePhoto": "https://www.pinterest.com/bobbie3jo/lol-dolls/"
 }
 
-###
+### Eliminar cuenta
 DELETE http://localhost:8082/api/user
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0ZmM4LTRmZjktNGI3ZS04YTEzLTdjODZhYjcwODc5MyIsImlhdCI6MTc1OTgwNzUwNCwiZXhwIjoxNzU5ODExMTA0fQ.Ysj9j9_XhIJ9rQRumui6pGcbsOgrhyoJSwkfomGpKlLuTE1ZzP9749HevxLsmbq6
@@ -16,56 +17,71 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0Z
 {
 }
 
-###
+### Cambiar contraseña
 PATCH http://localhost:8082/api/user/password
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImYzOGU0ZmM4LTRmZjktNGI3ZS04YTEzLTdjODZhYjcwODc5MyIsImlhdCI6MTc1OTgwNzUwNCwiZXhwIjoxNzU5ODExMTA0fQ.Ysj9j9_XhIJ9rQRumui6pGcbsOgrhyoJSwkfomGpKlLuTE1ZzP9749HevxLsmbq6
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjQ0NDljYzNkLWIxY2QtNGY5MC05YTBkLTg3NjRkNDc2NWFhNyIsImlhdCI6MTc2MDExODIxNiwiZXhwIjoxNzYwMTIxODE2fQ.-5p8k3V6eWSI8t4bx4rMs-p17PZ-u3Jz1YXJJdmbyblZllX3-cDWnCImFKgXJXN8
 
 {
-  "oldPassword": "121M21t2",
+  "oldPassword": "12Wanda12",
   "newPassword": "12wAnda12"
 }
 
-###
+### Editar perfil desde HOST
 PUT http://localhost:8082/api/user/host
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MTMyLCJleHAiOjE3NTk4NjA3MzJ9.84hblgKn852n_vBmfEb0wJo8ERZFLgJSyTQA9iNtI6LkpcR78FKXpisTDcxu4dYt
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjQ0NDljYzNkLWIxY2QtNGY5MC05YTBkLTg3NjRkNDc2NWFhNyIsImlhdCI6MTc2MDExODIxNiwiZXhwIjoxNzYwMTIxODE2fQ.-5p8k3V6eWSI8t4bx4rMs-p17PZ-u3Jz1YXJJdmbyblZllX3-cDWnCImFKgXJXN8
 
 {
   "aboutMe": "Soy elkin el anfitrion pro",
   "documents": "Anexo1"
 }
 
-###
+### Editar perfil desde HOST
+PUT http://localhost:8082/api/user/host
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjQ0NDljYzNkLWIxY2QtNGY5MC05YTBkLTg3NjRkNDc2NWFhNyIsImlhdCI6MTc2MDExODIxNiwiZXhwIjoxNzYwMTIxODE2fQ.-5p8k3V6eWSI8t4bx4rMs-p17PZ-u3Jz1YXJJdmbyblZllX3-cDWnCImFKgXJXN8
+
+{
+  "aboutMe": "Soy will el anfitrion pro",
+  "documents": "Anexo1"
+}
+
+
+### Obtener perfil propio desde GUEST
 GET http://localhost:8082/api/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODUyNTU1LCJleHAiOjE3NTk4NTYxNTV9.FSJfanJG0vaDPac5TOUqrYii28WD2_1sIEF3l9JFbTJYc1dsbMxMItLKqOpkJZed
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
 
 {
 
 }
 
-###
+### Obtener perfil propio desde HOST
 GET http://localhost:8082/api/user/host
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MTMyLCJleHAiOjE3NTk4NjA3MzJ9.84hblgKn852n_vBmfEb0wJo8ERZFLgJSyTQA9iNtI6LkpcR78FKXpisTDcxu4dYt
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
 
 {
 
 }
 
-###
+
+
+### Pasar de GUEST a host
 PATCH http://localhost:8082/api/user/host
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MDc5LCJleHAiOjE3NTk4NjA2Nzl9.96b6sy8ZrAdx9WgvLraIZQ9TpqugGqYruXWGt7tBfKwrCVbv1Q9cUAIcO_GsWphr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
 
 {
 }
 
-###
+
+
+###Pasar de Hot a guest
 PATCH http://localhost:8082/api/user/guest
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiZjM4ZTRmYzgtNGZmOS00YjdlLThhMTMtN2M4NmFiNzA4NzkzIiwiaWF0IjoxNzU5ODU3MDc5LCJleHAiOjE3NTk4NjA2Nzl9.96b6sy8ZrAdx9WgvLraIZQ9TpqugGqYruXWGt7tBfKwrCVbv1Q9cUAIcO_GsWphr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDEzNDc2NywiZXhwIjoxNzYwMTM4MzY3fQ.eGsAfxvy0nKnTxj6KtAH_eCcniL4YMWrEcTNKnS1paGhFYv1js0699j4uHm9JE_y
 
 {
 

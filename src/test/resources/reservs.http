@@ -1,0 +1,33 @@
+POST http://localhost:8082/api/reserves/0a5ac087-91e2-471f-bb7e-612234288806
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
+
+{
+  "checkIn": "2026-01-08",
+  "checkOut": "2026-01-10",
+  "gestCount": 6
+}
+
+###
+GET http://localhost:8082/api/reserves/listings/0a5ac087-91e2-471f-bb7e-612234288806?page=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDEzNTM4MCwiZXhwIjoxNzYwMTM4OTgwfQ.absIgNOczEe32NbSOhZd1YL7izEzMNpi9KAs4d26usG4FZ4BcNVjWmJEAekCeHLv
+
+{
+
+}
+
+###
+GET http://localhost:8082/api/reserves?page=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
+
+###
+DELETE http://localhost:8082/api/reserves/33288c91-2303-4598-ae83-11d5e5020a7e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl
+
+###
+GET http://localhost:8082/api/reserves/33288c91-2303-4598-ae83-11d5e5020a7e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl

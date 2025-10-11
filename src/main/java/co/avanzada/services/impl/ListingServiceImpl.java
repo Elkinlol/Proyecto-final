@@ -1,9 +1,7 @@
 package co.avanzada.services.impl;
-import co.avanzada.dtos.listings.ListingDTO;
-import co.avanzada.dtos.listings.MetricsDTO;
-import co.avanzada.dtos.listings.CreateListingDTO;
-import co.avanzada.dtos.listings.UpdateListingDTO;
+import co.avanzada.dtos.listings.*;
 import co.avanzada.exception.ConflictException;
+import co.avanzada.exception.ForbiddenException;
 import co.avanzada.exception.ResourceNotFoundException;
 import co.avanzada.exception.UnatorizedException;
 import co.avanzada.mappers.ListingMapper;
@@ -58,17 +56,18 @@ public class ListingServiceImpl implements ListingService {
                 .latitud(createListingDTO.adress().latitud())
                 .longitud(createListingDTO.adress().longitud())
                 .build();
-        Adress addressSaved = adressRepository.save(adress);
-
-        listing.setAdress(addressSaved);
-
+        adress = adressRepository.save(adress);
+        listing.setAdress(adress);
         listingRepository.save(listing);
+        user.getListings().add(listing);
         return listingMapper.toDTO(listing);
     }
 
     @Override
     public ListingDTO updateListing(String id, UpdateListingDTO updateListingDTO) {
+        String idUser = authUtils.getCurrentUserId();
         Listing listing = findListingById(id);
+        validateListingOwner(listing, idUser);
         listingMapper.updateListingFromDTO(updateListingDTO, listing);
         listingRepository.save(listing);
         return listingMapper.toDTO(listing);
@@ -76,7 +75,12 @@ public class ListingServiceImpl implements ListingService {
 
     @Override
     public Void deleteListing(String id) {
+        String idUser = authUtils.getCurrentUserId();
         Listing listing = findListingById(id);
+        validateListingOwner(listing, idUser);
+        if(listingRepository.existsFutureReservations(id, LocalDateTime.now())) {
+            throw new ConflictException("No se puede eliminaar un alojamiento con reservas futuras");
+        }
         listing.setStatus(Status.INACTIVE);
         listingRepository.save(listing);
         return null;
@@ -89,8 +93,8 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public Page<ListingDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
-                                               BigDecimal nightlyPrice, List<Services> servicesList, int page) {
+    public Page<ListingSearchResponseDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
+                                                             BigDecimal nightlyPrice, List<Services> servicesList, int page) {
 
         if(fecha1 != null && fecha2 == null || fecha1 == null && fecha2!=null){
             throw new ConflictException("Debe enviar las dos fechas");
@@ -98,13 +102,21 @@ public class ListingServiceImpl implements ListingService {
 
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Listing> listings= listingRepository.findByFilter(ciudad, fecha1, fecha2, servicesList, nightlyPrice, pageable);
-        return listings.map(listingMapper::toDTO);
+        return listings.map(listingMapper::toResponseDTO);
     }
 
 
-
-    public MetricsDTO getMetrics(String id, String startDate, String endDate) {
-        return null;
+    @Override
+    public MetricsDTO getMetrics(String id, LocalDate startDate, LocalDate endDate) {
+        String idUser = authUtils.getCurrentUserId();
+        Listing listing = findListingById(id);
+        validateListingOwner(listing, idUser);
+        if(listing.getStatus().equals(Status.INACTIVE)){
+            throw new ConflictException("No se pueden ver las metricas de este alojamiento");
+        }
+        int cantReservs = listingRepository.countReservationsByListingAndDateRange(id, startDate, endDate);
+        float rating = listingRepository.averageRatingByListingAndDateRange(id, startDate, endDate);
+        return new MetricsDTO(rating, cantReservs, listing.getTitle());
     }
 
     @Override
@@ -128,5 +140,12 @@ public class ListingServiceImpl implements ListingService {
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
         return userRepository.findById(id).get();
+    }
+
+    private void validateListingOwner (Listing listing, String idUser)  {
+        if(!listing.getHost().getId().equals(idUser)){
+            throw new ForbiddenException("Este host no es el dueño del alojamiento");
+        }
+
     }
 }

@@ -19,7 +19,7 @@ public interface UserMapper {
     @Mapping(target = "status", constant = "ACTIVE")
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "isHost", expression = "java(false)")
-    //@Mapping(target = "rol", expression = "java(Rol.valueOf(dto.Rol)")
+
     User toEntity(CreateUserDTO createUserDTO);
 
 

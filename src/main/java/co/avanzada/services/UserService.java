@@ -13,5 +13,5 @@ public interface UserService {
     String  upgradeToHost();
     HostDTO findHost();
     HostDTO updateHost(UpdateProfileHostDTO updateProfileHostDTO );
-    void upgradeToGuest();
+    String upgradeToGuest();
 }

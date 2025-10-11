@@ -66,8 +66,7 @@ public class AuthServiceImpl implements AuthService {
         /*PREGUNTARif(user.getStatus().equals(Status.INACTIVE)){
             throw new UnatorizedException("Cuenta inactiva");
         }*/
-        String rol = user.getRol().iterator().next().name();
-        String token = jwtUtils.generateToken(user.getId(), Map.of("rol", rol));
+        String token = jwtUtils.generateToken(user.getId(), Map.of("rol", user.getRol().name()));
         return  new LoginResponseDTO (userMapper.toUserDTO(user), token) ;
     }
 

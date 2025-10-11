@@ -1,9 +1,6 @@
 package co.avanzada.services;
 
-import co.avanzada.dtos.listings.CreateListingDTO;
-import co.avanzada.dtos.listings.ListingDTO;
-import co.avanzada.dtos.listings.MetricsDTO;
-import co.avanzada.dtos.listings.UpdateListingDTO;
+import co.avanzada.dtos.listings.*;
 import co.avanzada.model.Listing;
 import co.avanzada.model.enunms.Services;
 import org.springframework.data.domain.Page;
@@ -18,8 +15,8 @@ public interface ListingService {
     ListingDTO updateListing( String id,  UpdateListingDTO UpdateListing);
     Void deleteListing( String id);
     ListingDTO getListing( String id);
-    Page <ListingDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
-                                         BigDecimal nightlyPrice, List<Services> servicesList, int page);
-    MetricsDTO getMetrics(String id, String startDate, String endDate);
+    Page <ListingSearchResponseDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
+                                                       BigDecimal nightlyPrice, List<Services> servicesList, int page);
+    MetricsDTO getMetrics(String id, LocalDate startDate, LocalDate endDate);
     Page <ListingDTO> getListingFromHost(int page);
 }

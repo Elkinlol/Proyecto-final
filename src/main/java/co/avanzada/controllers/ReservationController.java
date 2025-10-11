@@ -1,13 +1,20 @@
 package co.avanzada.controllers;
 
 import co.avanzada.dtos.extras.ResponseDTO;
+import co.avanzada.dtos.extras.ResponseUserDTO;
 import co.avanzada.dtos.reservs.CreateReserveDTO;
+import co.avanzada.dtos.reservs.ReservDTO;
+import co.avanzada.model.enunms.ReservationStatus;
 import co.avanzada.services.ReservationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+
 
 @RestController
 @RequestMapping("/api/reserves")
@@ -16,35 +23,35 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @PostMapping()
-    public ResponseEntity <ResponseDTO<String>> CreateReserve(@Valid @RequestBody CreateReserveDTO createReserveDTO){
-        reservationService.CreateReserve(createReserveDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @PostMapping("/{listingId}")
+    public ResponseEntity <ResponseUserDTO<ReservDTO>> CreateReserve(@Valid @RequestBody CreateReserveDTO createReserveDTO, @PathVariable String listingId) {
+        ReservDTO reservDTO = reservationService.CreateReserve(createReserveDTO, listingId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseUserDTO<>(true, "Reserva creada correctamente", reservDTO));
     }
     @GetMapping()
-    public ResponseEntity<ResponseDTO<ResponseDTO>> getReservations(@RequestParam (required = false) String estado,
-                                                  @RequestParam (required = false) String checkIn,
-                                                  @RequestParam (required = false) String checkOut,
-                                                  @RequestParam (required = false) String page,
-                                                  @RequestParam (required = false) String pageSize){
+    public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getReservations(@RequestParam (required = false) ReservationStatus estado,
+                                                  @RequestParam (required = false) LocalDate checkIn,
+                                                  @RequestParam (required = false) LocalDate checkOut,
+                                                  @RequestParam  int page
+                                                  ){
 
-        reservationService.getReservations(estado,checkIn,checkOut,page,pageSize);
-        return ResponseEntity.ok().build();
+        Page <ReservDTO> reservs = reservationService.getReservations(estado,checkIn,checkOut, page);
+        return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Reservas encontradas", reservs));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseDTO<String>> getReservation(@PathVariable String id){
-        reservationService.getReservation(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ResponseUserDTO<ReservDTO>> getReservation(@PathVariable String id){
+        ReservDTO reservDTO= reservationService.getReservation(id);
+        return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Reserva encontrada", reservDTO));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDTO<String>> deleteReservation(@PathVariable String id){
         reservationService.deleteReservation(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDTO<>(true, "Reserva eliminada"));
     }
     @GetMapping("/listings/{id}")
-    public ResponseEntity<ResponseDTO<String>> getListingsByReservation(@PathVariable String id){
-        reservationService.getListingsByReservation(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getListingsByReservation(@PathVariable String id, @RequestParam int page){
+        Page<ReservDTO> reservs = reservationService.getListingsByReservation(id,page);
+        return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Se encontraron las siguientes", reservs));
     }
 
 }

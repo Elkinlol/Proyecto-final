@@ -11,6 +11,7 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ import java.util.List;
 
 public class Listing {
     @Id
-    private String id;
+    private String id = UUID.randomUUID().toString();
 
     @Column(nullable = false, length = 70)
     private  String title;
@@ -30,16 +31,17 @@ public class Listing {
     @Column(nullable = false, length = 500)
     private  String description;
 
-    @Column(nullable = false, length = 500)
-    private  String url;
+    @Column(nullable = false)
+    private float averageRating = 0;
 
-    @ElementCollection @Size(min = 1, max= 10)
+    @ElementCollection @Size(max= 10)
     private List<String> image;
 
     @Column(nullable = false)
     private LocalDateTime creationDate;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "adress_id", referencedColumnName = "id", nullable = false)
     private Adress adress;
 
     @ManyToOne
@@ -55,6 +57,7 @@ public class Listing {
     @Column(nullable = false)
     private Integer maxGuest;
 
+    @ElementCollection(targetClass = Services.class)
     @Enumerated(EnumType.STRING)
     private List<Services> services;
 

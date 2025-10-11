@@ -44,16 +44,14 @@ public class User {
     @Column(nullable=false)
     private LocalDate birthday;
 
-    @ElementCollection(targetClass = Rol.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
-    private Set<Rol> rol;
+    private Rol rol;
 
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String profilePhoto;
 
     @OneToMany
@@ -72,7 +70,10 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PasswordResetCode> resetCodes = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Listing> listings;
+
+    @OneToMany
+    private List<Reply> replies;
 }
 

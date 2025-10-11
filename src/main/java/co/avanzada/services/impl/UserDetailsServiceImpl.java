@@ -31,10 +31,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        user.getRol().forEach(rol ->
-                authorities.add(new SimpleGrantedAuthority(rol.name()))
+        List<GrantedAuthority> authorities = List.of(
+                new SimpleGrantedAuthority(user.getRol().name())
         );
+
 
 
         return new org.springframework.security.core.userdetails.User(

@@ -15,5 +15,5 @@ public record CreateUserDTO(@Email @NotBlank String email,
                             message = "La contraseña nueva debe contener al menos una mayúscula, una minúscula y un número")
                             String password,
                             @NotBlank @Size(min=10, max = 100) String fullName,
-                            @NotBlank @Size(min=8) String numberPhone, @Valid @NotNull LocalDate birthday,@NotNull Set<Rol> rol) {
+                            @NotBlank @Size(min=8) String numberPhone, @Valid @NotNull LocalDate birthday,@NotNull Rol rol) {
 }

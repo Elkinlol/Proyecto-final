@@ -1,3 +1,4 @@
+###Registrarse
 POST http://localhost:8082/api/auth
 Content-Type: application/json
 
@@ -7,15 +8,17 @@ Content-Type: application/json
   "email": "vergarwillinton04@gmail.com",
   "password": "12Wanda12",
   "birthday": "2000-08-22",
-  "rol": ["GUEST" ]
+  "rol": "GUEST" ,
+  "profilePhoto": "com.example.photo"
+
 }
 
-###
+###Registrarse
 POST http://localhost:8082/api/auth
 Content-Type: application/json
 
 {
-  "rol": ["GUEST" ],
+  "rol": "GUEST" ,
 "fullName": "Juan Bermudez",
 "numberPhone": "121M21t2",
 "email": "carlos1@email.com",
@@ -24,12 +27,12 @@ Content-Type: application/json
 
 }
 
-###
+###Registrarse
 POST http://localhost:8082/api/auth
 Content-Type: application/json
 
 {
-  "rol": ["GUEST" ],
+  "rol": "GUEST" ,
   "fullName": "Elkin Bermudez Grajales",
   "numberPhone": "121M21t2",
   "email": "elkinlol13@gmail.com",
@@ -38,7 +41,7 @@ Content-Type: application/json
 
 }
 
-###
+### Iniciar sesion
 POST http://localhost:8082/api/auth/login
 Content-Type: application/json
 
@@ -47,15 +50,15 @@ Content-Type: application/json
   "password":"12Wanda12"
 
 }
-###
+###Iniciar sesion
 POST http://localhost:8082/api/auth/login
 Content-Type: application/json
 
 {
   "email": "elkinlol13@gmail.com",
-  "password": "12wAnda12"
+  "password": "121M21t2"
 }
-###
+### Enviar correo para recuperar contraseña
 PUT http://localhost:8082/api/auth/change/password
 Content-Type: application/json
 
@@ -63,7 +66,7 @@ Content-Type: application/json
   "email": "elkinlol13@gmail.com"
 }
 
-###
+### Enviar correo para recuperar contraseña
 PUT http://localhost:8082/api/auth/change/password
 Content-Type: application/json
 
@@ -71,13 +74,13 @@ Content-Type: application/json
   "email": "vergarawillinton04@gmail.com"
 }
 
-###
+###  recuperar contraseña
 POST http://localhost:8082/api/auth/password
 Content-Type: application/json
 
 {
   "newPassword": "12Elkin13",
-  "recuperationCode": "64728",
+  "recuperationCode": "99647",
   "email": "elkinlol13@gmail.com"
 
 }

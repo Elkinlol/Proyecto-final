@@ -13,10 +13,10 @@ import java.util.List;
 @Embeddable
 public class Host {
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = true, length = 500)
     private  String aboutMe;
 
-    @Column(nullable = false, length = 500)
+    @Column(nullable = true, length = 500)
     private  String documents;
 
 }

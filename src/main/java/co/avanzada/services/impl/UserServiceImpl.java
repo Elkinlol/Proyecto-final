@@ -87,12 +87,10 @@ public class UserServiceImpl implements UserService {
             throw new ConflictException("El usuario ya es host");
         }
         user.setIsHost(true);
-        if (!user.getRol().contains(Rol.HOST)) {
-            user.getRol().add(Rol.HOST);
-            user.getRol().remove(Rol.GUEST);
+        if (!user.getRol().equals(Rol.HOST)) {
+            user.setRol(Rol.HOST);
         }
-        String rol = user.getRol().iterator().next().name();
-        String token = jwtUtils.generateToken(user.getId(), Map.of("rol", rol));
+        String token = jwtUtils.generateToken(user.getId(), Map.of("rol", user.getRol().name()));
         userRepository.save(user);
         return token;
     }
@@ -121,15 +119,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void upgradeToGuest() {
+    public String upgradeToGuest() {
         String id = authUtils.getCurrentUserId();
         User user = getUserById(id);
         if (!user.getIsHost()) {
             throw new ConflictException("El usuario ya es guest");
         }
         user.setIsHost(false);
-        user.getRol().remove(Rol.HOST);
+        user.setRol(Rol.GUEST);
+        String token = jwtUtils.generateToken(user.getId(), Map.of("rol", user.getRol().name()));
         userRepository.save(user);
+        return token;
     }
 
 

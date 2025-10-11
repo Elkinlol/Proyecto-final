@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -16,24 +18,26 @@ import java.time.LocalDate;
 @Entity
 public class Reservations {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String  id = UUID.randomUUID().toString();
 
     @Column(nullable = false)
     private LocalDate checkIn;
 
     @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
     private LocalDate checkOut;
 
     @Column(nullable = false)
-    private int guestCount;
+    private Integer guestCount;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name = "listing_id", referencedColumnName = "id")
     private Listing listings;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = false, name= "user_id", referencedColumnName = "id")
     private User user;
 
 

@@ -12,7 +12,7 @@ public record CreateListingDTO(
         @NotBlank @Length (max =100)  String title,
         @Valid  @NotNull AddressDTO adress,
         @NotNull @DecimalMin("0.1") BigDecimal nightlyPrice,
-        @NotEmpty @NotNull @Min(1) int maxGuest,
+        @NotNull @Min(1) Integer maxGuest,
         @NotBlank @Length(max = 500) String description,
         @NotEmpty @NotNull @Size(min = 1, max = 10) List<String> images
 ) {

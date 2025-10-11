@@ -6,6 +6,7 @@ import co.avanzada.security.JWTFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,6 +46,16 @@ public class SecurityConfig {
                                 "/v3/api-docs.yaml",
                                 "/swagger-resources/**",
                                 "/webjars/**").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/user").hasAuthority("GUEST")
+                        .requestMatchers(HttpMethod.POST, "/api/listings/**").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.GET, "/api/listings/search").hasAuthority("GUEST")
+                        .requestMatchers(HttpMethod.DELETE, "/api/listings/**").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.PATCH, "/api/listings/**").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.PUT, "/api/listings/**").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.GET, "/api/listings/{id}").hasAuthority("GUEST")
+                        .requestMatchers(HttpMethod.GET, "/api/listings/{id}/metrics").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.GET, "/api/listings").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.POST, "/api/reserves/**").hasAuthority("GUEST")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new JWTAuthenticationEntryPoint()))

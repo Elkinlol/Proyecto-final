@@ -22,48 +22,48 @@ public class UserController {
     public ResponseEntity <ResponseDTO<String>> updatePassword(@Valid @RequestBody UpdatePasswordDTO request ){
         userService.updatePassword(request);
 
-        return ResponseEntity.ok().body(new ResponseDTO<>(false, "Contraseña cambiada con exito"));
+        return ResponseEntity.ok().body(new ResponseDTO<>(true, "Contraseña cambiada con exito"));
     }
 
     @PutMapping()
     public ResponseEntity <ResponseUserDTO<UserDTO>> updateUser (@Valid @RequestBody UpdateProfileDTO updateProfileDTO) {
         UserDTO userDTO = userService.updateUser(updateProfileDTO);
-        return ResponseEntity.ok().body(new ResponseUserDTO<>( false , "Usuario actualizadao con exito", userDTO));
+        return ResponseEntity.ok().body(new ResponseUserDTO<>( true , "Usuario actualizadao con exito", userDTO));
     }
 
     @GetMapping()
     public ResponseEntity <ResponseUserDTO<UserDTO>> findUserById(){
         UserDTO userDTO = userService.findUserById();
-        return ResponseEntity.ok().body(new ResponseUserDTO<>(false, "Se obtuvo el usuario con exito", userDTO));
+        return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Se obtuvo el usuario con exito", userDTO));
     }
 
     @DeleteMapping()
     public ResponseEntity <ResponseDTO<String>> deleteUser(){
         userService.deleteUser();
 
-        return ResponseEntity.ok().body(new ResponseDTO<>( false , "Usuario eliminado con exito"));
+        return ResponseEntity.ok().body(new ResponseDTO<>( true , "Usuario eliminado con exito"));
     }
     @PatchMapping ("/host")
     public ResponseEntity<ResponseUserDTO<String>> upgradeToHost(){
         String newToken = userService.upgradeToHost();
-        return ResponseEntity.ok().body(new ResponseUserDTO<>( false , "Ha cambiado a rol de Anfitrion" , newToken));
+        return ResponseEntity.ok().body(new ResponseUserDTO<>( true , "Ha cambiado a rol de Anfitrion" , newToken));
     }
 
     @GetMapping("/host")
     public ResponseEntity <ResponseUserDTO<HostDTO>> findHost(){
         HostDTO host = userService.findHost();
-        return ResponseEntity.ok().body(new ResponseUserDTO<>(false, "Se obtuvo el usuario con exito", host));
+        return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Se obtuvo el usuario con exito", host));
     }
 
     @PutMapping("/host")
     public ResponseEntity<ResponseUserDTO<HostDTO>> updateHost(@Valid @RequestBody UpdateProfileHostDTO updateProfileHostDTO) {
         HostDTO host = userService.updateHost(updateProfileHostDTO);
-        return ResponseEntity.ok().body(new ResponseUserDTO<>(false, "Usuario actualizado con exito", host));
+        return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Usuario actualizado con exito", host));
     }
 
     @PatchMapping("/guest")
-    public ResponseEntity<ResponseDTO<String>> upgradeToGuest(){
-        userService.upgradeToGuest();
-        return ResponseEntity.ok().body(new ResponseDTO<>( false , "Ha cambiado a rol de huesped"));
+    public ResponseEntity<ResponseUserDTO<String>> upgradeToGuest(){
+        String newToken = userService.upgradeToGuest();
+        return ResponseEntity.ok().body(new ResponseUserDTO<>( true , "Ha cambiado a rol de huesped" , newToken ));
     }
 }

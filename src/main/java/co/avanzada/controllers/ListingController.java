@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -75,6 +76,21 @@ public class ListingController {
         Page<ListingDTO> page1 = listingService.getListingFromHost(page);
         return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Alojamientos encontrados", page1));
 
+    }
+
+    @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
+    public ResponseEntity<ResponseUserDTO<List<String>>> uploadListingImages(@PathVariable String id, @RequestParam("files") List<MultipartFile> images) throws Exception {
+        List<String> urls = listingService.uploadListingImages(id, images);
+        return ResponseEntity.ok(new ResponseUserDTO<>(false, "Imágenes subidas correctamente", urls));
+    }
+
+    @DeleteMapping("/{id}/images")
+    public ResponseEntity<ResponseUserDTO<String>> deleteListingImage(
+            @PathVariable String id,
+            @RequestParam("imageId") String imageId
+    ) throws Exception {
+        listingService.deleteListingImage(id, imageId);
+        return ResponseEntity.ok(new ResponseUserDTO<>(false, "Imagen eliminada correctamente", null));
     }
 
 }

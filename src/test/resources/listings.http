@@ -1,7 +1,7 @@
 ### Crear un nuevo alojamiento
 POST http://localhost:8082/api/listings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczMjYtMmRhMS00MWU0LWJkOTQtMWYxMWIzNDM5YTRkIiwiaWF0IjoxNzYwMTM0OTE5LCJleHAiOjE3NjAxMzg1MTl9.zxYramFAMzuwEWnpVcAGlVZD0V53ZjFPO7-Fdx2MBVA9zFx8E2NBsGFYOwPAsvc8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
   "title": "Apartamento moderno con vista al mar",
@@ -24,7 +24,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczM
 ### Crear un nuevo alojamiento
 POST http://localhost:8082/api/listings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczMjYtMmRhMS00MWU0LWJkOTQtMWYxMWIzNDM5YTRkIiwiaWF0IjoxNzYwMTM0OTE5LCJleHAiOjE3NjAxMzg1MTl9.zxYramFAMzuwEWnpVcAGlVZD0V53ZjFPO7-Fdx2MBVA9zFx8E2NBsGFYOwPAsvc8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
 "title": "Loft moderno en el centro de Medellín",
@@ -46,7 +46,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczM
 ### Crear un nuevo alojamiento
 POST http://localhost:8082/api/listings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczMjYtMmRhMS00MWU0LWJkOTQtMWYxMWIzNDM5YTRkIiwiaWF0IjoxNzYwMTM0OTE5LCJleHAiOjE3NjAxMzg1MTl9.zxYramFAMzuwEWnpVcAGlVZD0V53ZjFPO7-Fdx2MBVA9zFx8E2NBsGFYOwPAsvc8
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
   "title": "Cabaña rústica en las montañas de Antioquia",
@@ -69,48 +69,50 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiN2NhZTczM
 
 
 ### Editar un alojamiento
-PATCH http://localhost:8082/api/listings/1ad65a81-7134-4b3c-b4d1-09712656d1dd
+PATCH http://localhost:8082/api/listings/1b99131d-eced-4221-904d-d49451ab5c4a
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiNGIyZWVhZDUtNTlkNy00ZTNiLTlmYWUtMzg0YzQ5NzAyYTBhIiwiaWF0IjoxNzYwMTE0NDk2LCJleHAiOjE3NjAxMTgwOTZ9.99MydziGgQ0QZ6CfzfRuRuRpqwgxWjUpEb1sDmcY-Osaa5PfS2_Vxy5f5v7PxDtF
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
   "title": "Los mejores"
 }
 
 ### Soft delete de un alojamiento
-DELETE http://localhost:8082/api/listings/1ad65a81-7134-4b3c-b4d1-09712656d1dd
+DELETE http://localhost:8082/api/listings/b999bf06-f4a2-46d7-a8b5-33d79ea0ffe5
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6Ijc2MWFhMjE5LTUzMjUtNGE4ZS1iYzliLTdlZmJkMmM4ZmIzMyIsImlhdCI6MTc1OTg5NDAwNiwiZXhwIjoxNzU5ODk3NjA2fQ.fckXIALgAe6GSmjULEbClcd7JYycmsSrKcSzSH_woO1Zvr5wO1PVftrJfF3OS1RW
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
 }
 
 ### Obtener  un alojamiento -- vista detalles usuario
-GET http://localhost:8082/api/listings/28327f54-8014-44a0-9382-137a92ad8932
+GET http://localhost:8082/api/listings/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDE5NTY4NSwiZXhwIjoxNzYwMTk5Mjg1fQ.vPgScSzsf0Xd4i0nymRsj433d189sa8x0gKoIERqHwBJsiR2YfmetRmzUJFbEvZ1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
 
 {
 }
 
-###
+
+### Obtener los alojamientos por filtros u obtener todos los alojamientos desde guest
 GET http://localhost:8082/api/listings/search?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDE5NTY4NSwiZXhwIjoxNzYwMTk5Mjg1fQ.vPgScSzsf0Xd4i0nymRsj433d189sa8x0gKoIERqHwBJsiR2YfmetRmzUJFbEvZ1
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
 
 {
 
 }
 
-###
-GET http://localhost:8082/api/listings/0a5ac087-91e2-471f-bb7e-612234288806/metrics
+### Ver la metricas de una alojamiento en un rango de fechas o sin el
+GET http://localhost:8082/api/listings/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8/metrics
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
 }
 
-###
+
+### Obtner los alojamientos del Host
 GET http://localhost:8082/api/listings?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL

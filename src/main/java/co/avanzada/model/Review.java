@@ -38,6 +38,5 @@ public class Review {
     private LocalDateTime createdAt;
 
     @OneToOne
-    @JoinColumn
     private Reply replyAt;
 }

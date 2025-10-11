@@ -28,6 +28,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     WHERE r.listing.id = :listingId
     ORDER BY r.createdAt DESC
 """)
-    Page<ReviewDTO> findReviewsByListing(String listingId, Pageable pageable);
+    Page<Review> findReviewsByListing(String listingId, Pageable pageable);
 
 }

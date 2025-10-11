@@ -46,7 +46,7 @@ public class ReservationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDTO<String>> deleteReservation(@PathVariable String id){
         reservationService.deleteReservation(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseDTO<>(true, "Reserva eliminada"));
+        return ResponseEntity.ok().body(new ResponseDTO<>(true, "Reserva eliminada"));
     }
     @GetMapping("/listings/{id}")
     public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getListingsByReservation(@PathVariable String id, @RequestParam int page){

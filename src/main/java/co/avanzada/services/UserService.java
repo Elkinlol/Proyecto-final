@@ -14,4 +14,5 @@ public interface UserService {
     HostDTO findHost();
     HostDTO updateHost(UpdateProfileHostDTO updateProfileHostDTO );
     String upgradeToGuest();
+    String uploadProfilePhoto(String userId, MultipartFile image)throws Exception;
 }

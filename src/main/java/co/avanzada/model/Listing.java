@@ -10,6 +10,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -54,6 +55,9 @@ public class Listing {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @ElementCollection
+    private List<String> imageIds = new ArrayList<>();
+
     @Column(nullable = false)
     private Integer maxGuest;
 
@@ -64,6 +68,6 @@ public class Listing {
     @OneToMany
     private List<Review> reviews;
 
-    @ManyToOne
-    private Promotion promotion;
+    @OneToMany(mappedBy = "listing", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Promotion> coupons = new ArrayList<>();
 }

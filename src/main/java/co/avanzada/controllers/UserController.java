@@ -10,6 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/user")
@@ -65,5 +66,11 @@ public class UserController {
     public ResponseEntity<ResponseUserDTO<String>> upgradeToGuest(){
         String newToken = userService.upgradeToGuest();
         return ResponseEntity.ok().body(new ResponseUserDTO<>( true , "Ha cambiado a rol de huesped" , newToken ));
+    }
+
+    @PostMapping(value = "/{id}/profile-photo", consumes = "multipart/form-data")
+    public ResponseEntity<ResponseUserDTO<String>> uploadProfilePhoto(@PathVariable String id, @RequestParam("file") MultipartFile image) throws Exception {
+        String url = userService.uploadProfilePhoto(id, image);
+        return ResponseEntity.ok(new ResponseUserDTO<>(false, "Foto de perfil actualizada correctamente", url));
     }
 }

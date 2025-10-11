@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -22,7 +23,7 @@ public class Reply {
     private String message;
 
     @Column(nullable=false)
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @OneToOne
     private Review review;

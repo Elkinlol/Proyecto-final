@@ -119,6 +119,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String uploadProfilePhoto(String userId, MultipartFile image) throws Exception {
+        String id = authUtils.getCurrentUserId();
+        User user = getUserById(id);
+
+
+        // Eliminar la imagen anterior si existía
+        if (user.getProfilePhotoId() != null) {
+            imageService.delete(user.getProfilePhotoId());
+        }
+
+        Map uploadResult = imageService.upload(image);
+        user.setProfilePhoto((String) uploadResult.get("secure_url"));
+        user.setProfilePhotoId((String) uploadResult.get("public_id"));
+        userRepository.save(user);
+
+        return user.getProfilePhoto();
+    }
+
+    @Override
     public String upgradeToGuest() {
         String id = authUtils.getCurrentUserId();
         User user = getUserById(id);

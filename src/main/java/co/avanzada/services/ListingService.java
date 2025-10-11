@@ -4,6 +4,7 @@ import co.avanzada.dtos.listings.*;
 import co.avanzada.model.Listing;
 import co.avanzada.model.enunms.Services;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.math.BigDecimal;
@@ -19,4 +20,6 @@ public interface ListingService {
                                                        BigDecimal nightlyPrice, List<Services> servicesList, int page);
     MetricsDTO getMetrics(String id, LocalDate startDate, LocalDate endDate);
     Page <ListingDTO> getListingFromHost(int page);
+    List<String> uploadListingImages(String listingId, List<MultipartFile> images)throws Exception;
+    void deleteListingImage(String listingId, String imageId)throws Exception;
 }

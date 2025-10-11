@@ -21,16 +21,19 @@ public class Reservations {
     private String  id = UUID.randomUUID().toString();
 
     @Column(nullable = false)
-    private LocalDate checkIn;
+    private LocalDateTime checkIn;
 
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDate checkOut;
+    private LocalDateTime checkOut;
 
     @Column(nullable = false)
     private Integer guestCount;
+
+    @Column(nullable = true)
+    private String discountCode;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "listing_id", referencedColumnName = "id")

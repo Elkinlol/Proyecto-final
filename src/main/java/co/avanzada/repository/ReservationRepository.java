@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
@@ -20,7 +21,7 @@ public interface ReservationRepository extends JpaRepository<Reservations, Long>
         AND r.reservationsStatus IN ('PENDING', 'CONFIRMED')
         AND (r.checkIn < :checkOut AND r.checkOut > :checkIn)
     """)
-    boolean existsByListingAndDateRange(String listingId, LocalDate checkIn, LocalDate checkOut);
+    boolean existsByListingAndDateRange(String listingId, LocalDateTime checkIn, LocalDateTime checkOut);
 
     Optional<Reservations> findById(String id);
 
@@ -49,11 +50,10 @@ public interface ReservationRepository extends JpaRepository<Reservations, Long>
     SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END
     FROM Reservations r
     WHERE r.user.id = :userId
-      AND r.listings.id = :listingId
-      AND r.checkOut < CURRENT_DATE
+      AND r.checkOut < CURRENT_TIMESTAMP
       AND r.reservationsStatus = 'COMPLETED'
 """)
-    boolean hasCompletedReservation(String userId,
-                                     String listingId);
+    boolean hasAnyCompletedReservation(String userId);
+
 
 }

@@ -1,0 +1,34 @@
+
+### Crear review desde el GUEST
+POST http://localhost:8082/api/review/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
+
+{
+  "comment": "Muy buen alojamiento",
+  "rating": 4
+}
+### Crear review desde el GUEST
+POST http://localhost:8082/api/review/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
+
+{
+  "comment": "Muy buen alojamiento",
+  "rating": 4
+}
+
+###
+GET http://localhost:8082/api/review/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8?page=0
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
+
+
+### Crear la respuesta del host
+POST http://localhost:8082/api/review/host/1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
+
+{
+  "message": "Me encanto haberlos atendido"
+}

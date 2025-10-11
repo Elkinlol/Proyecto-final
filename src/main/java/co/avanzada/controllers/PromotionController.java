@@ -19,8 +19,8 @@ public class PromotionController {
         promotionService.createPromotion(id, createPromotionDTO);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/listings/{id}")
-    public ResponseEntity<ResponseDTO<String>> getPromotions(@PathVariable String id){
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseDTO<String>> getPromotions(@PathVariable Long id){
         promotionService.getPromotions(id);
         return ResponseEntity.ok().build();
     }

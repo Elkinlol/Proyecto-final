@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 
 
 public record CreateReserveDTO(
-        @NotNull LocalDate checkIn, @NotNull LocalDate checkOut,
-        @NotNull @Min(1)Integer gestCount) {
+        @NotNull LocalDateTime checkIn, @NotNull LocalDateTime checkOut,
+        @NotNull @Min(1)Integer guestCount, String discountCode) {
 }

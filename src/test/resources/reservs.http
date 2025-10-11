@@ -1,33 +1,37 @@
-POST http://localhost:8082/api/reserves/0a5ac087-91e2-471f-bb7e-612234288806
+
+
+### crear una reserva
+POST http://localhost:8082/api/reserves/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
 
 {
-  "checkIn": "2026-01-08",
-  "checkOut": "2026-01-10",
-  "gestCount": 6
+  "checkIn": "2026-02-11T15:00:00",
+  "checkOut": "2026-02-13T11:00:00",
+  "guestCount": 2,
+  "discountCode": "COLOMBIA1"
 }
 
-###
-GET http://localhost:8082/api/reserves/listings/0a5ac087-91e2-471f-bb7e-612234288806?page=0
+###Listar las reservas de un alojamiento desde el HOST
+GET http://localhost:8082/api/reserves/listings/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjdjYWU3MzI2LTJkYTEtNDFlNC1iZDk0LTFmMTFiMzQzOWE0ZCIsImlhdCI6MTc2MDEzNTM4MCwiZXhwIjoxNzYwMTM4OTgwfQ.absIgNOczEe32NbSOhZd1YL7izEzMNpi9KAs4d26usG4FZ4BcNVjWmJEAekCeHLv
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
 
 {
 
 }
 
-###
+### Listar reservas desde el GUEST
 GET http://localhost:8082/api/reserves?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6ImMxMzEwMzY5LTk1N2MtNDAxMC1iMGM5LWFhMDRhMjU2OTViZiIsImlhdCI6MTc2MDE5MTkzOCwiZXhwIjoxNzYwMTk1NTM4fQ.ZV57AQlA9qTMpfXvpvxoJyxhBvQdlWIl3h3JbVYyQk3aEI13MDiCrbXtbBRlGilO
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
 
-###
-DELETE http://localhost:8082/api/reserves/33288c91-2303-4598-ae83-11d5e5020a7e
+### Cancelar una reserva
+DELETE http://localhost:8082/api/reserves/725cc13a-81a7-480b-88c5-8c06d55bdfb5
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
 
-###
-GET http://localhost:8082/api/reserves/33288c91-2303-4598-ae83-11d5e5020a7e
+### Ver una reserva
+GET http://localhost:8082/api/reserves/b6b3275f-316d-4208-802f-67bfc60606b3
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiYzEzMTAzNjktOTU3Yy00MDEwLWIwYzktYWEwNGEyNTY5NWJmIiwiaWF0IjoxNzYwMTkyNzY1LCJleHAiOjE3NjAxOTYzNjV9.Nm-d5gnXlW2Z5wgxBufcsfv55UauQS2IQHAx8kiBij737jumk5HVJ3-SVwd5etwl
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo

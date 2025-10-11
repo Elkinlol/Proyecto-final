@@ -7,10 +7,13 @@ import co.avanzada.exception.ForbiddenException;
 import co.avanzada.exception.ResourceNotFoundException;
 import co.avanzada.mappers.ReservMapper;
 import co.avanzada.model.Listing;
+import co.avanzada.model.Promotion;
 import co.avanzada.model.Reservations;
 import co.avanzada.model.User;
 import co.avanzada.model.enunms.ReservationStatus;
+import co.avanzada.model.enunms.Status;
 import co.avanzada.repository.ListingRepository;
+import co.avanzada.repository.PromotionRepository;
 import co.avanzada.repository.ReservationRepository;
 import co.avanzada.repository.UserRepository;
 import co.avanzada.security.AuthUtils;
@@ -27,6 +30,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +46,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final ReservMapper reservMapper;
     private final AuthUtils authUtils;
     private final EmailService emailService;
+    private final PromotionRepository promotionRepository;
     private final int pageSize= 10;
 
 
@@ -54,13 +59,22 @@ public class ReservationServiceImpl implements ReservationService {
         Listing listing = findListingById(listingId);
 
         //Se realizan las validaciones
+        validateListingActive(listing.getStatus());
         validateDateRange(createReserve.checkIn(), createReserve.checkOut());
-        validateCapacityListing(createReserve.gestCount(), listing.getMaxGuest());
+        validateCapacityListing(createReserve.guestCount(), listing.getMaxGuest());
         validateAvailability(listingId, createReserve.checkIn(), createReserve.checkOut());
 
-        //Definimos datos y guardamos
+        //Logica del precio
         long nigths = java.time.temporal.ChronoUnit.DAYS.between(createReserve.checkIn(), createReserve.checkOut());
         BigDecimal totalPrice= listing.getNightlyPrice().multiply(new BigDecimal(nigths));
+        if(createReserve.discountCode()!=null  && !createReserve.discountCode().isBlank()) {
+            Promotion cupon = validateCupon(createReserve.discountCode(), listingId);
+            BigDecimal descuento = totalPrice.multiply(cupon.getPromotion()).divide(BigDecimal.valueOf(100));
+            totalPrice = totalPrice.subtract(descuento);
+            cupon.setUsed(true);
+            promotionRepository.delete(cupon);
+        }
+        //Definimos datos y guardamos
         Reservations reservation = reservMapper.toEntity(createReserve);
         reservation.setPrice(totalPrice);
         reservation.setUser(user);
@@ -100,10 +114,10 @@ public class ReservationServiceImpl implements ReservationService {
         String userId = authUtils.getCurrentUserId();
         User user = getUserById(userId);
         Reservations reservation = getReservationById(id).get();
-        if(!user.getReservations().contains(reservation)){
+        if(!reservation.getUser().getId().equals(user.getId())){
             throw new ForbiddenException("No se puede eliminar una reserva que no le pertenezca");
         }
-        if(!reservation.getCheckIn().isBefore(LocalDate.now().minusDays(2))){
+        if(reservation.getCheckIn().isBefore(LocalDateTime.now().minusDays(2))){
             throw new ConflictException("La reserva no puede ser eliminada, porque quedan 48 horas o menos para el inicio del hospedaje");
         }
         reservation.setReservationsStatus(ReservationStatus.CANCELLED);
@@ -142,8 +156,14 @@ public class ReservationServiceImpl implements ReservationService {
         return userRepository.findById(id).get();
     }
 
-    private void validateDateRange(LocalDate checkIn, LocalDate checkOut){
-        if(checkIn.isBefore(LocalDate.now()) || !checkOut.isAfter(checkIn)){
+
+    private void  validateListingActive(Status status){
+        if(status.equals(Status.INACTIVE)){
+            throw new ConflictException("Ya no se pueden realizar reservas de este alojamiento");
+        }
+    }
+    private void validateDateRange(LocalDateTime checkIn, LocalDateTime checkOut){
+        if(checkIn.isBefore(LocalDateTime.now()) || !checkOut.isAfter(checkIn)){
             throw new ConflictException("No se puede reservar en fechas pasadas  y mayores a 1 noche");
         }
     }
@@ -154,7 +174,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
-    private void validateAvailability(String listingId, LocalDate checkIn, LocalDate checkOut) {
+    private void validateAvailability(String listingId, LocalDateTime checkIn, LocalDateTime checkOut) {
         boolean overlap = reservationRepository.existsByListingAndDateRange(listingId, checkIn, checkOut);
         if (overlap)
             throw new ConflictException("Ya existe una reserva en esas fechas");
@@ -165,6 +185,18 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ResourceNotFoundException("Reserva no encontrada");
         }
         return reservationRepository.findById(id);
+    }
+
+    private Promotion validateCupon(String code, String listingId) {
+        if(!promotionRepository.findByCode(code).isPresent()){
+            throw new ResourceNotFoundException("Cupon invalido o expirado");
+        }
+        Promotion promotion = promotionRepository.findByCode(code).get();
+        if (promotion.getListing() != null && !promotion.getListing().getId().equals(listingId)) {
+            throw new ConflictException("Este cupón no es válido para este alojamiento");
+        }
+
+        return promotion;
     }
 
 }

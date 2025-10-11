@@ -15,6 +15,7 @@ import co.avanzada.repository.AdressRepository;
 import co.avanzada.repository.ListingRepository;
 import co.avanzada.repository.UserRepository;
 import co.avanzada.security.AuthUtils;
+import co.avanzada.services.ImageService;
 import co.avanzada.services.ListingService;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,11 +26,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -43,6 +46,7 @@ public class ListingServiceImpl implements ListingService {
     private final AdressRepository  adressRepository;
     private final AuthUtils authUtils;
     private final int pageSize =10;
+    private final ImageService imageService;
 
     @Override
     public ListingDTO createListing(CreateListingDTO createListingDTO) {
@@ -74,11 +78,11 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public Void deleteListing(String id) {
+    public Void deleteListing(String listingId) {
         String idUser = authUtils.getCurrentUserId();
-        Listing listing = findListingById(id);
+        Listing listing = findListingById(listingId);
         validateListingOwner(listing, idUser);
-        if(listingRepository.existsFutureReservations(id, LocalDateTime.now())) {
+        if(listingRepository.existsFutureReservations(listingId, LocalDateTime.now())) {
             throw new ConflictException("No se puede eliminaar un alojamiento con reservas futuras");
         }
         listing.setStatus(Status.INACTIVE);
@@ -88,7 +92,12 @@ public class ListingServiceImpl implements ListingService {
 
     @Override
     public ListingDTO getListing(String id) {
+        String currentUserId = authUtils.getCurrentUserId();
+        getUserById(currentUserId);
         Listing listing = findListingById(id);
+        if(listing.getStatus().equals(Status.INACTIVE)) {
+            throw new ConflictException("El alojamiento ya no existe");
+        }
         return listingMapper.toDTO(listing);
     }
 
@@ -125,6 +134,36 @@ public class ListingServiceImpl implements ListingService {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<Listing> listings = listingRepository.findListingByHost(user, pageable);
         return listings.map(listingMapper::toDTO);
+    }
+
+    @Override
+    public List<String> uploadListingImages(String listingId, List<MultipartFile> images) throws Exception {
+        Listing listing = findListingById(listingId);
+
+        for (MultipartFile image : images) {
+            Map uploadResult = imageService.upload(image);
+            listing.getImage().add((String) uploadResult.get("secure_url"));
+            listing.getImageIds().add((String) uploadResult.get("public_id"));
+        }
+
+        listingRepository.save(listing);
+        return listing.getImage();
+    }
+
+    @Override
+    public void deleteListingImage(String listingId, String imageId) throws Exception {
+        Listing listing = listingRepository.findById(listingId)
+                .orElseThrow(() -> new RuntimeException("Alojamiento no encontrado"));
+
+        imageService.delete(imageId);
+
+        int index = listing.getImageIds().indexOf(imageId);
+        if (index != -1) {
+            listing.getImageIds().remove(index);
+            listing.getImage().remove(index);
+        }
+
+        listingRepository.save(listing);
     }
 
 

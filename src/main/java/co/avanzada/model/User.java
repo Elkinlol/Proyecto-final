@@ -48,8 +48,12 @@ public class User {
     private Rol rol;
 
 
+
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Column
+    private String profilePhotoId;
 
     @Column(nullable = true)
     private String profilePhoto;

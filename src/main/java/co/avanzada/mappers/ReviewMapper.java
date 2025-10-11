@@ -1,5 +1,6 @@
 package co.avanzada.mappers;
 
+import co.avanzada.dtos.review.CreateReplyReviewDTO;
 import co.avanzada.dtos.review.CreateReviewDTO;
 import co.avanzada.dtos.review.ReplyReviewDTO;
 import co.avanzada.dtos.review.ReviewDTO;
@@ -17,15 +18,15 @@ public interface ReviewMapper {
     @Mapping(target = "rating", source = "rating" )
     Review toReview(CreateReviewDTO createReviewDTO);
 
-    @Mapping(target = "nameUser", source = "user.fullname")
+    @Mapping(target = "nameUser", source = "user.fullName")
     ReviewDTO toReviewDTO(Review review);
 
     @Mapping(target = "createdAt", expression = "java(java.time.LocalDateTime.now())")
     @Mapping(target = "message", source = "message")
-    Reply toReply(ReplyReviewDTO replyReviewDTO);
+    Reply toReply(CreateReplyReviewDTO replyReviewDTO);
 
     @Mapping(target = "message", source = "message")
-    @Mapping(target = "name", source = "host.fullname")
+    @Mapping(target = "nameHost", source = "host.fullName")
     ReplyReviewDTO toReplyReviewDTO(Reply reply);
 
 }

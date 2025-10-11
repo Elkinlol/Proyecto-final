@@ -1,0 +1,13 @@
+###Crear cupon
+POST http://localhost:8082/api/promotion/listings/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
+
+{
+  "createdAt": "2025-10-11T14:30:00",
+  "expirationDate": "2025-12-31T23:59:00",
+  "promotion": 15.0,
+  "code": "COLOMBIA1"
+
+}
+

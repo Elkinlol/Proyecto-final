@@ -31,7 +31,7 @@ public interface ListingRepository extends JpaRepository<Listing, String> {
         WHERE r.listings.id = :listingId
           AND r.checkOut > :checkOut
     """)
-    boolean existsFutureReservations(String id, LocalDateTime checkOut);
+    boolean existsFutureReservations(String listingId, LocalDateTime checkOut);
 
     // Filtrado avanzado de listings
     @Query("""

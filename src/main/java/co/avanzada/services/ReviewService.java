@@ -12,5 +12,5 @@ import java.util.List;
 public interface ReviewService {
     ReviewDTO createReview( String listingId ,CreateReviewDTO reviewDTO);
     Page<ReviewDTO> getReview(String id, int page );
-    ReplyReviewDTO replyReview(String listingId , CreateReplyReviewDTO reviewDTO);
+    ReplyReviewDTO replyReview(Long reviewId , CreateReplyReviewDTO reviewDTO);
 }

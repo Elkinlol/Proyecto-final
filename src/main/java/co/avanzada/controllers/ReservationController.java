@@ -48,9 +48,9 @@ public class ReservationController {
         reservationService.deleteReservation(id);
         return ResponseEntity.ok().body(new ResponseDTO<>(true, "Reserva eliminada"));
     }
-    @GetMapping("/listings/{id}")
-    public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getListingsByReservation(@PathVariable String id, @RequestParam int page){
-        Page<ReservDTO> reservs = reservationService.getListingsByReservation(id,page);
+    @GetMapping("/{listingId}")
+    public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getListingsByReservation(@PathVariable String listingId, @RequestParam int page){
+        Page<ReservDTO> reservs = reservationService.getListingsByReservation(listingId,page);
         return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Se encontraron las siguientes", reservs));
     }
 

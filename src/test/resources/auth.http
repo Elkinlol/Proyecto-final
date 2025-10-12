@@ -5,12 +5,11 @@ Content-Type: application/json
 {
   "fullName": "Willito vergara",
   "numberPhone": "3218982391",
-  "email": "vergarwillinton04@gmail.com",
+  "email": "vergarw4illinton02135@gmail.com",
   "password": "12Wanda12",
   "birthday": "2000-08-22",
   "rol": "GUEST" ,
   "profilePhoto": "com.example.photo"
-
 }
 
 ###Registrarse
@@ -20,8 +19,8 @@ Content-Type: application/json
 {
   "rol": "GUEST" ,
 "fullName": "Juan Bermudez",
-"numberPhone": "121M21t2",
-"email": "carlos1@email.com",
+"numberPhone": "3218982391",
+"email": "carlos2133214@email.com",
 "password": "121M21t2",
 "birthday": "2000-08-22"
 
@@ -34,9 +33,9 @@ Content-Type: application/json
 {
   "rol": "GUEST" ,
   "fullName": "Elkin Bermudez Grajales",
-  "numberPhone": "121M21t2",
+  "numberPhone": "3218983231",
   "email": "elkinlol13@gmail.com",
-  "password": "121M21t2",
+  "password": "22eLkin12",
   "birthday": "2000-08-22"
 
 }
@@ -46,18 +45,19 @@ POST http://localhost:8082/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "vergarwillinton04@gmail.com",
-  "password":"12Wanda12"
-
+  "email": "elkinlol13@gmail.com",
+  "password":"11Elkin11"
 }
+
 ###Iniciar sesion
 POST http://localhost:8082/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "elkinlol13@gmail.com",
-  "password": "121M21t2"
+  "email": "vergarwillinton04@gmail.com",
+  "password": "12Wanda12"
 }
+
 ### Enviar correo para recuperar contraseña
 PUT http://localhost:8082/api/auth/change/password
 Content-Type: application/json
@@ -79,8 +79,8 @@ POST http://localhost:8082/api/auth/password
 Content-Type: application/json
 
 {
-  "newPassword": "12Elkin13",
-  "recuperationCode": "99647",
+  "newPassword": "11Elkin11",
+  "recuperationCode": "57547",
   "email": "elkinlol13@gmail.com"
 
 }

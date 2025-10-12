@@ -1,8 +1,8 @@
 
 ### Crear review desde el GUEST
-POST http://localhost:8082/api/review/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
+POST http://localhost:8082/api/review/f873a806-52da-44c2-b650-c44a3dbad7f1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIzODcyMywiZXhwIjoxNzYwMjQyMzIzfQ.I2tjC-OyVG5Pd_VLyGjhTC-Kj6XHQU036tbnlrHUBYYgpYbzhzmavJuJWkAXrDcr
 
 {
   "comment": "Muy buen alojamiento",
@@ -11,7 +11,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZ
 ### Crear review desde el GUEST
 POST http://localhost:8082/api/review/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
+Authorization: Bearer
 
 {
   "comment": "Muy buen alojamiento",
@@ -21,13 +21,13 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZ
 ###
 GET http://localhost:8082/api/review/42bf50ba-c8c9-42c1-bb3b-97a9767e38a8?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIxNTk4OCwiZXhwIjoxNzYwMjE5NTg4fQ.mFTRUzzNwfiVUfKuXmsNKOyRzsOcK6jim_oJYsrwNsSCjt1vQ-p6_k4WXqTww8mo
+Authorization: Bearer
 
 
 ### Crear la respuesta del host
-POST http://localhost:8082/api/review/host/1
+POST http://localhost:8082/api/review/host/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjE2MDQzLCJleHAiOjE3NjAyMTk2NDN9.FwGRWKPB52esW2teQ7EZmaXgfZ3JBRd7pGbTQPkJCDqhoIPLV_dRTFVWY2QoOhUL
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjM4NjkzLCJleHAiOjE3NjAyNDIyOTN9.-_9EwBjq6FHt0Aflb0seWaYLsz2ZfNzXyGoOVwqo9R4pFxiHCDIvr3X79cne2DYD
 
 {
   "message": "Me encanto haberlos atendido"

@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 "/swagger-resources/**",
                                 "/webjars/**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/user").hasAuthority("GUEST")
+                        .requestMatchers(HttpMethod.PUT, "/api/user/host").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.POST, "/api/listings/**").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/listings/search").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.DELETE, "/api/listings/**").hasAuthority("HOST")

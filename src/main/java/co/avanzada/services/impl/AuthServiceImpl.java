@@ -75,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
         User user = validateEmail(resetPasswordDTO.email());
         Optional<PasswordResetCode> passwordResetCode= resetPasswordRepository.findByUserAndCode(user, resetPasswordDTO.recuperationCode());
         if(!passwordResetCode.isPresent()){
-            throw new ResourceNotFoundException("El codigo enviado es erroneo");
+            throw new UnatorizedException("El codigo enviado es erroneo");
         }
         LocalDateTime now = LocalDateTime.now();
         PasswordResetCode code = passwordResetCode.get();

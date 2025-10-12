@@ -24,6 +24,7 @@ public interface ListingMapper {
     ListingDTO toDTO(Listing entity);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "maxGuest", source = "maxCapacity")
     void updateListingFromDTO(UpdateListingDTO dto, @MappingTarget Listing entity);
 
     @Mapping(target = "city", source = "adress.city")// de Listing.adress.city

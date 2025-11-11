@@ -48,7 +48,6 @@ public class User {
     private Rol rol;
 
 
-
     @Enumerated(EnumType.STRING)
     private Status status;
 

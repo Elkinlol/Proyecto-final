@@ -13,5 +13,6 @@ import java.util.Set;
 public record UserDTO(
         @Email @NotNull String email,
         @NotBlank @Size(max= 100) String fullName,
-        @NotBlank @Size(max= 20) String numberPhone
+        @NotBlank @Size(max= 20) String numberPhone,
+        String profilePhoto
         ) {}

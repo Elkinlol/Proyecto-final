@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String uploadProfilePhoto(String userId, MultipartFile image) throws Exception {
+    public String uploadProfilePhoto(MultipartFile image) throws Exception {
         String id = authUtils.getCurrentUserId();
         User user = getUserById(id);
 

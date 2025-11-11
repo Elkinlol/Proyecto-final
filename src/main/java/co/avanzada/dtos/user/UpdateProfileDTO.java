@@ -16,5 +16,4 @@ import org.springframework.web.multipart.MultipartFile;
 public class UpdateProfileDTO {
                  @Length(max= 100) private String fullName;
                  @Length(min = 8) private String numberPhone;
-                 @Length(max = 500) private  String profilePhoto;
 }

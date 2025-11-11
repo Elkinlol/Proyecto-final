@@ -63,9 +63,9 @@ public class AuthServiceImpl implements AuthService {
         if(!passwordEncoder.matches(loginUserDTO.password(),user.getPassword())){
             throw new UnatorizedException("Creedenciales incorrectas");
         }
-        /*PREGUNTARif(user.getStatus().equals(Status.INACTIVE)){
+        if(user.getStatus().equals(Status.INACTIVE)){
             throw new UnatorizedException("Cuenta inactiva");
-        }*/
+        }
         String token = jwtUtils.generateToken(user.getId(), Map.of("rol", user.getRol().name()));
         return  new LoginResponseDTO (userMapper.toUserDTO(user), token) ;
     }

@@ -38,7 +38,7 @@ public class AuthServiceTest {
     private ResetPasswordRepository resetPasswordRepository;
 
     @Autowired
-    private AuthServiceImpl authService;
+    private AuthService authService;
 
     @MockitoBean
     private JavaMailSender mailSender; // mockeado

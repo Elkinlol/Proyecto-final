@@ -16,7 +16,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZ
 ###Listar las reservas de un alojamiento desde el HOST
 GET http://localhost:8082/api/reserves/listings/f873a806-52da-44c2-b650-c44a3dbad7f1?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjM4NjkzLCJleHAiOjE3NjAyNDIyOTN9.-_9EwBjq6FHt0Aflb0seWaYLsz2ZfNzXyGoOVwqo9R4pFxiHCDIvr3X79cne2DYD
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjIxMTY1YjJlLWRhMjAtNGZkMi1hOGFmLTk1MjZkNTUyZDFlOSIsImlhdCI6MTc2MjExNTAzNSwiZXhwIjoxNzYyMTE4NjM1fQ.UjOeijF6G5q-hocpHRQsQYOFWt1Iij1dmlXR1vnQ1_Wu0cerm0GAR6MOmCqPK6vY
 
 {
 

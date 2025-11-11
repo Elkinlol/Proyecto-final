@@ -50,8 +50,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PUT, "/api/user/host").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/user").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.GET, "/api/user/host").hasAuthority("HOST")
-                        .requestMatchers(HttpMethod.PATCH, "/api/user/host").hasAuthority("HOST")
-                        .requestMatchers(HttpMethod.PATCH, "/api/user/guest").hasAuthority("GUEST")
+                        .requestMatchers(HttpMethod.PATCH, "/api/user/host").hasAuthority("GUEST")
+                        .requestMatchers(HttpMethod.PATCH, "/api/user/guest").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.POST, "/api/listings").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.PATCH, "/api/listings/{id}").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/listings/search").hasAuthority("GUEST")
@@ -79,7 +79,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         // Configura las políticas de CORS para permitir solicitudes desde el frontend
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
+        config.setAllowedOrigins(List.of("http://localhost:4200"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);

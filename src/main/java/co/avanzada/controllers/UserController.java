@@ -68,9 +68,9 @@ public class UserController {
         return ResponseEntity.ok().body(new ResponseUserDTO<>( true , "Ha cambiado a rol de huesped" , newToken ));
     }
 
-    @PostMapping(value = "/{id}/profile-photo", consumes = "multipart/form-data")
-    public ResponseEntity<ResponseUserDTO<String>> uploadProfilePhoto(@PathVariable String id, @RequestParam("file") MultipartFile image) throws Exception {
-        String url = userService.uploadProfilePhoto(id, image);
+    @PostMapping(value = "/profile-photo", consumes = "multipart/form-data")
+    public ResponseEntity<ResponseUserDTO<String>> uploadProfilePhoto( @RequestParam("file") MultipartFile image) throws Exception {
+        String url = userService.uploadProfilePhoto( image);
         return ResponseEntity.ok(new ResponseUserDTO<>(false, "Foto de perfil actualizada correctamente", url));
     }
 }

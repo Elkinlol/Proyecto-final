@@ -98,9 +98,9 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZ
 
 
 ### Obtener los alojamientos por filtros u obtener todos los alojamientos desde guest
-GET http://localhost:8082/api/listings/search?city=Bogota&page=1
+GET http://localhost:8082/api/listings/search?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIzODcyMywiZXhwIjoxNzYwMjQyMzIzfQ.I2tjC-OyVG5Pd_VLyGjhTC-Kj6XHQU036tbnlrHUBYYgpYbzhzmavJuJWkAXrDcr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjIxMTY1YjJlLWRhMjAtNGZkMi1hOGFmLTk1MjZkNTUyZDFlOSIsImlhdCI6MTc2MjExNTAzNSwiZXhwIjoxNzYyMTE4NjM1fQ.UjOeijF6G5q-hocpHRQsQYOFWt1Iij1dmlXR1vnQ1_Wu0cerm0GAR6MOmCqPK6vY
 
 {
 

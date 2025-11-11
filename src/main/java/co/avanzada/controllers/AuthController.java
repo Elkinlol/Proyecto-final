@@ -34,7 +34,7 @@ public class AuthController {
         ResponseUserDTO responseDTO = new ResponseUserDTO<>(true, "Se ha iniciado sesion",  loginResponseDTO);
         return ResponseEntity.ok().body(responseDTO);
     }
-    @PostMapping("password")
+    @PostMapping("/password")
     public ResponseEntity<ResponseDTO<String>> requestResetPassword(@Valid @RequestBody RequestResetPasswordDTO resetPasswordDTO){
         authService.requestResetPassword(resetPasswordDTO);
         return ResponseEntity.ok().body(new ResponseDTO<>(true, "Contraseña cambiada"));

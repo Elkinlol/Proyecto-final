@@ -180,7 +180,7 @@ public class  UserServiceTest {
 
         when(imageService.upload(file)).thenReturn(uploadResult);
 
-        String url = userService.uploadProfilePhoto("123", file);
+        String url = userService.uploadProfilePhoto(file);
 
         assertEquals("url", url);
         assertEquals("url", user.getProfilePhoto());

@@ -19,13 +19,13 @@ public class ImageController {
     @PostMapping(consumes = "multipart/form-data")
     public ResponseEntity<ResponseDTO<Map>> upload(@RequestParam("file") MultipartFile image) throws Exception{
         Map response = imageService.upload(image);
-        return ResponseEntity.ok( new ResponseDTO<>(false, response) );
+        return ResponseEntity.ok( new ResponseDTO<>(true, response) );
     }
 
     @DeleteMapping
     public ResponseEntity<ResponseDTO<String>> delete(@RequestParam("id") String id) throws Exception{
         imageService.delete(id);
-        return ResponseEntity.ok( new ResponseDTO<>(false, "Imagen eliminada exitosamente") );
+        return ResponseEntity.ok( new ResponseDTO<>(true, "Imagen eliminada exitosamente") );
     }
 
 }

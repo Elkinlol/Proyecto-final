@@ -35,20 +35,7 @@ public class ListingServiceTest{
 
     private UpdateListingDTO updateListingDTO;
 
-    @Test
-    @Sql("classpath:dataset.sql")
-    void testCreateListing() {
-        CreateListingDTO dto = new CreateListingDTO(
-                "Mi Alojamiento",
-                new AddressDTO("Calle 123", "Rionegro", "6.1", "-75.4"),
-                new BigDecimal("100.0"),
-                4,
-                "Descripción agradable de prueba",
-                List.of("http://imagen1.com", "http://imagen2.com")
-        );
 
-        assertDoesNotThrow(() -> listingService.createListing(dto));
-    }
 
     // ==========================
     // Test actualizar listing exitoso

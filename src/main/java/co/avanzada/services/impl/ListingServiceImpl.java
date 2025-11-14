@@ -102,7 +102,7 @@ public class ListingServiceImpl implements ListingService {
     }
 
     @Override
-    public Page<ListingSearchResponseDTO> getListingBySearch(String ciudad, LocalDate fecha1, LocalDate fecha2,
+    public Page<ListingSearchResponseDTO> getListingBySearch(String ciudad, LocalDateTime  fecha1, LocalDateTime  fecha2,
                                                              BigDecimal nightlyPrice, List<Services> servicesList, int page) {
 
         if(fecha1 != null && fecha2 == null || fecha1 == null && fecha2!=null){

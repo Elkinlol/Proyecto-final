@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record ListingSearchResponseDTO(
+        @NotBlank String id,
         @NotBlank String title, @NotBlank String fullName, @NotBlank String city, @NotNull BigDecimal nightlyPrice,
-        @NotNull int maxGuest, List<String> image) {
+        @NotNull int maxGuests, List<String> image) {
 }

@@ -17,7 +17,7 @@ public record CreateListingDTO(
         @NotNull @DecimalMin("0.1") BigDecimal nightlyPrice,
         @NotNull @Min(1) Integer maxGuest,
         @NotBlank @Length(max = 500) String description,
-        List<MultipartFile> images,
-        List<Services> services
+        List<String> images,
+        @NotNull List<Services> services
 ) {
 }

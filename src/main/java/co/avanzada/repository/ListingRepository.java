@@ -22,6 +22,13 @@ public interface ListingRepository extends JpaRepository<Listing, String> {
     Optional<Listing> findById(String id);
 
     // Obtener listings por host
+
+    @Query("""
+    SELECT l 
+    FROM Listing l
+    WHERE l.host = :host
+      AND l.status = 'ACTIVE'
+""")
     Page<Listing> findListingByHost(User host, Pageable pageable);
 
     // Verificar si existen reservas futuras para un listing
@@ -52,7 +59,7 @@ public interface ListingRepository extends JpaRepository<Listing, String> {
           )
       )
 """)
-    Page<Listing> findByFilter(String city, LocalDate checkIn, LocalDate checkOut, List<Services> services,
+    Page<Listing> findByFilter(String city, LocalDateTime  checkIn, LocalDateTime  checkOut, List<Services> services,
                                BigDecimal nightlyPrice, Pageable pageable);
 
     // Calcular rating promedio en un rango de fechas

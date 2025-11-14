@@ -9,6 +9,7 @@ import co.avanzada.services.ListingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -55,12 +57,14 @@ public class ListingController {
 
     @GetMapping ("/search")
     public ResponseEntity<ResponseUserDTO<Page<ListingSearchResponseDTO>>> getListingBySearch(@RequestParam(required = false) String city,
-                                                                                      @RequestParam(required = false) LocalDate checkIn,
-                                                                                      @RequestParam(required = false) LocalDate checkOut,
+                                                                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkIn,
+                                                                                      @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate checkOut,
                                                                                       @RequestParam(required = false) BigDecimal nightlyPrice,
                                                                                       @RequestParam (required = false) List<Services> servicesList, @RequestParam int page)
     {
-        Page<ListingSearchResponseDTO> listings = listingService.getListingBySearch( city,  checkIn,  checkOut,  nightlyPrice, servicesList, page );
+        LocalDateTime in = checkIn != null ? checkIn.atStartOfDay() : null;
+        LocalDateTime out = checkOut != null ? checkOut.atTime(23,59,59) : null;
+        Page<ListingSearchResponseDTO> listings = listingService.getListingBySearch( city,  in,  out,  nightlyPrice, servicesList, page );
         return ResponseEntity.ok().body(new ResponseUserDTO(true, "Se encontraron las siguiente", listings));
     }
 

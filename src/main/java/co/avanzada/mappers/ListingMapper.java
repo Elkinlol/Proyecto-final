@@ -29,6 +29,7 @@ public interface ListingMapper {
 
     @Mapping(target = "city", source = "adress.city")// de Listing.adress.city
     @Mapping(target = "fullName", source = "host.fullName")
+    @Mapping(target = "maxGuests", source = "maxGuest")
     ListingSearchResponseDTO toResponseDTO(Listing entity);
 
 

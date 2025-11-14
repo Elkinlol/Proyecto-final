@@ -46,7 +46,7 @@ Authorization: Bearer
 ### Crear un nuevo alojamiento
 POST http://localhost:8082/api/listings
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYyOTc5Njg1LCJleHAiOjE3NjI5ODMyODV9.R5az7QjlnkA8YgLeoB0C11YMpTXC5Jqiaj08M2-RY-JcOuL3BvqTRRqBMp9OVDEP
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYzMDAyNTYwLCJleHAiOjE3NjMwMDYxNjB9.8LSYxUAeFmXzXnXWOi06oHj0KnkvaVkU37pUo1ORpTle2f1aipjS43fnYYRffaOW
 
 {
   "title": "Cabaña rústica en las montañas de Antioquia",
@@ -61,7 +61,8 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViM
   "description": "Acogedora cabaña con chimenea, jacuzzi y vista panorámica a las montañas.",
   "images": [
     "https://res.cloudinary.com/dlsr4hzzo/image/upload/v1762979070/Proyecto-final/czbrvzkr2cmjdoui5c6c.pnghttps://res.cloudinary.com/dlsr4hzzo/image/upload/v1762979070/Proyecto-final/czbrvzkr2cmjdoui5c6c.pnghttps://res.cloudinary.com/dlsr4hzzo/image/upload/v1762979070/Proyecto-final/czbrvzkr2cmjdoui5c6c.png"
-  ]
+  ],
+  "services":["POOL", "AIRCONDITION"]
 }
 
 
@@ -98,7 +99,7 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZ
 ### Obtener los alojamientos por filtros u obtener todos los alojamientos desde guest
 GET http://localhost:8082/api/listings/search?page=0
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjIxMTY1YjJlLWRhMjAtNGZkMi1hOGFmLTk1MjZkNTUyZDFlOSIsImlhdCI6MTc2MjExNTAzNSwiZXhwIjoxNzYyMTE4NjM1fQ.UjOeijF6G5q-hocpHRQsQYOFWt1Iij1dmlXR1vnQ1_Wu0cerm0GAR6MOmCqPK6vY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYzMTM3NDM5LCJleHAiOjE3NjMxNDEwMzl9.WPbJg9YhlHlY5kVh1XmdDf2WHJC6iY9xbYmfi37IZ0ebHVpJDppJnCvdHfO_oxdw
 
 {
 
@@ -116,4 +117,4 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViM
 ### Obtner los alojamientos del Host
 GET http://localhost:8082/api/listings?page=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYwMjM4NjkzLCJleHAiOjE3NjAyNDIyOTN9.-_9EwBjq6FHt0Aflb0seWaYLsz2ZfNzXyGoOVwqo9R4pFxiHCDIvr3X79cne2DYD
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYzMDAyNTYwLCJleHAiOjE3NjMwMDYxNjB9.8LSYxUAeFmXzXnXWOi06oHj0KnkvaVkU37pUo1ORpTle2f1aipjS43fnYYRffaOW

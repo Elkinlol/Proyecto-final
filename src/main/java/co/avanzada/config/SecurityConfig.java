@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-resources/**",
-                                "/webjars/**").permitAll()
+                                "/webjars/**","/api/enums").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/user").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.PUT, "/api/user/host").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/user").hasAuthority("GUEST")
@@ -54,9 +54,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/user/guest").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.POST, "/api/listings").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.PATCH, "/api/listings/{id}").hasAuthority("HOST")
-                        .requestMatchers(HttpMethod.GET, "/api/listings/search").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.DELETE, "/api/listings/{id}").hasAuthority("HOST")
-                        .requestMatchers(HttpMethod.GET, "/api/listings/{id}").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.GET, "/api/listings/{id}/metrics").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/listings").hasAuthority("HOST")
                         .requestMatchers("api/listings/{id}/images/**").hasAuthority("HOST")

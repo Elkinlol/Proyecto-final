@@ -91,13 +91,13 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Page<ReservDTO> getReservations(ReservationStatus estado, LocalDate checkIn, LocalDate checkOut, int page) {
+    public Page<ReservDTO> getReservations(ReservationStatus estado, LocalDateTime checkIn, LocalDateTime checkOut, int page) {
         User user = getUserById(authUtils.getCurrentUserId());
         if(checkIn != null && checkOut == null || checkIn == null && checkOut!=null){
             throw new ConflictException("Debe enviar las dos fechas");
         }
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page<Reservations> reservations = reservationRepository.findByFilters(estado, checkIn, checkOut, pageable);
+        Page<Reservations> reservations = reservationRepository.findByFilters(authUtils.getCurrentUserId() ,estado, checkIn, checkOut, pageable);
         return reservations.map(reservMapper::toDTO);
     }
 
@@ -136,7 +136,7 @@ public class ReservationServiceImpl implements ReservationService {
             throw new ForbiddenException("Este alojamiento no pertenece a este host");
         }
         Pageable pageable = PageRequest.of(page, pageSize);
-        Page <Reservations> reservations = reservationRepository.findAllByListingId(id, pageable);
+        Page <Reservations> reservations = reservationRepository.findAllByListingId(id,userId, pageable);
         return reservations.map(reservMapper::toDTO);
     }
 

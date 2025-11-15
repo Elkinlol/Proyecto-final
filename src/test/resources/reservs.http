@@ -14,18 +14,18 @@ Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZ
 }
 
 ###Listar las reservas de un alojamiento desde el HOST
-GET http://localhost:8082/api/reserves/listings/f873a806-52da-44c2-b650-c44a3dbad7f1?page=0
+GET http://localhost:8082/api/reserves/listings/f873a806-52da-44c2-b650-c44a3dbad7f1?page=0&state=CANCELLED
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjIxMTY1YjJlLWRhMjAtNGZkMi1hOGFmLTk1MjZkNTUyZDFlOSIsImlhdCI6MTc2MjExNTAzNSwiZXhwIjoxNzYyMTE4NjM1fQ.UjOeijF6G5q-hocpHRQsQYOFWt1Iij1dmlXR1vnQ1_Wu0cerm0GAR6MOmCqPK6vY
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYzMTY3ODE0LCJleHAiOjE3NjMxNzE0MTR9.koWqlHEQHSw497x0d0RxTAGfP30Tpm9yIcS-6qxfwYr3ECqLXXhlaDOA23A30lep
 
 {
 
 }
 
 ### Listar reservas desde el GUEST
-GET http://localhost:8082/api/reserves?page=1
+GET http://localhost:8082/api/reserves?page=1&estado=CANCELLED
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJHVUVTVCIsInN1YiI6IjY4YmYzZWQ1LWUxODUtNDUzOS1hNTM3LTEzNWMxZmE4OGQyNSIsImlhdCI6MTc2MDIzODcyMywiZXhwIjoxNzYwMjQyMzIzfQ.I2tjC-OyVG5Pd_VLyGjhTC-Kj6XHQU036tbnlrHUBYYgpYbzhzmavJuJWkAXrDcr
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJyb2wiOiJIT1NUIiwic3ViIjoiMjExNjViMmUtZGEyMC00ZmQyLWE4YWYtOTUyNmQ1NTJkMWU5IiwiaWF0IjoxNzYzMTY4Mzc1LCJleHAiOjE3NjMxNzE5NzV9.tD_8b4UvQOfnZfY3WONhOYnUF55efmlb_AgBzBsAAoEfskkbDv4Qw3aIutxwzb1c
 
 ### Cancelar una reserva
 DELETE http://localhost:8082/api/reserves/725cc13a-81a7-480b-88c5-8c06d55bdfb5

@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -27,24 +26,31 @@ public interface ReservationRepository extends JpaRepository<Reservations, Long>
 
     @Query("""
     SELECT r FROM Reservations r
-    WHERE (:estado IS NULL OR r.reservationsStatus = :estado)
+    WHERE r.user.id = :userId
+      AND (:estado IS NULL OR r.reservationsStatus = :estado)
       AND (:checkIn IS NULL OR r.checkIn >= :checkIn)
       AND (:checkOut IS NULL OR r.checkOut <= :checkOut)
     ORDER BY r.createdAt DESC
 """)
     Page<Reservations> findByFilters(
+            String userId,
             ReservationStatus estado,
-            LocalDate checkIn,
-            LocalDate checkOut,
+            LocalDateTime checkIn,
+            LocalDateTime checkOut,
             Pageable pageable
     );
 
     @Query("""
     SELECT r FROM Reservations r
     WHERE r.listings.id = :listingId
+      AND r.listings.host.id = :hostId
     ORDER BY r.checkIn DESC
 """)
-    Page<Reservations> findAllByListingId( String listingId, Pageable pageable);
+    Page<Reservations> findAllByListingId(
+            String listingId,
+            String hostId,
+            Pageable pageable
+    );
 
     @Query("""
     SELECT CASE WHEN COUNT(r) > 0 THEN true ELSE false END

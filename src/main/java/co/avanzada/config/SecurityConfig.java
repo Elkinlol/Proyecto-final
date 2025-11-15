@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/v3/api-docs.yaml",
                                 "/swagger-resources/**",
-                                "/webjars/**","/api/enums").permitAll()
+                                "/webjars/**","/api/enums", "/api/listings/search**").permitAll()
                         .requestMatchers(HttpMethod.PUT, "/api/user").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.PUT, "/api/user/host").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/user").hasAuthority("GUEST")
@@ -59,9 +59,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/listings").hasAuthority("HOST")
                         .requestMatchers("api/listings/{id}/images/**").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.POST, "/api/reserves/{listingId}").hasAuthority("GUEST")
-                        .requestMatchers(HttpMethod.GET, "/api/reserves").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.GET, "/api/reserves").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.DELETE, "/api/reserves/{listingId}").hasAuthority("GUEST")
-                        .requestMatchers(HttpMethod.GET, "/api/reserves/{listingId}").hasAuthority("HOST")
+                        .requestMatchers(HttpMethod.GET, "/api/reserves/{listingId}/host").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.POST, "/api/review/{listingId}").hasAuthority("GUEST")
                         .requestMatchers(HttpMethod.GET, "/api/reviews/host/{reviewId}").hasAuthority("HOST")
                         .requestMatchers(HttpMethod.GET, "/api/promotion/{listingId}").hasAuthority("HOST")

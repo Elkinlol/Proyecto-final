@@ -1,7 +1,9 @@
 package co.avanzada.controllers;
 
 
+import co.avanzada.model.enunms.ReservationStatus;
 import co.avanzada.model.enunms.Services;
+import co.avanzada.model.enunms.Status;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,11 +20,21 @@ import java.util.stream.Collectors;
 public class EnumController {
 
     @GetMapping
-    public ResponseEntity<List<String>> getCities() {
-        List<String> cities = Arrays.stream(Services.values())
+    public ResponseEntity<List<String>> getServices() {
+        List<String> services = Arrays.stream(Services.values())
                 .map(Enum::name)
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(cities);
+        return ResponseEntity.ok(services);
     }
+
+    @GetMapping("/status")
+    public ResponseEntity<List<String>> getReservationStatus() {
+        List<String> reservationStatuses = Arrays.stream(ReservationStatus.values())
+                .map(Enum::name).collect(Collectors.toList());
+        return ResponseEntity.ok(reservationStatuses);
+
+    }
+
+
 
 }

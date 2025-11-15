@@ -10,5 +10,5 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record ReservDTO(@Valid @NotNull LocalDateTime checkIn, @Valid @NotNull LocalDateTime checkOut,
-                        Integer guestCount, @NotNull ReservationStatus status, BigDecimal totalPrice) {
+                        Integer guestCount, @NotNull ReservationStatus status, BigDecimal totalPrice, String id) {
 }

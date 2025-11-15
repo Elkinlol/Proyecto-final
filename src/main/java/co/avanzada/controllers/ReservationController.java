@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 
 @RestController
@@ -30,8 +31,8 @@ public class ReservationController {
     }
     @GetMapping()
     public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getReservations(@RequestParam (required = false) ReservationStatus estado,
-                                                  @RequestParam (required = false) LocalDate checkIn,
-                                                  @RequestParam (required = false) LocalDate checkOut,
+                                                  @RequestParam (required = false) LocalDateTime checkIn,
+                                                  @RequestParam (required = false) LocalDateTime checkOut,
                                                   @RequestParam  int page
                                                   ){
 
@@ -48,7 +49,7 @@ public class ReservationController {
         reservationService.deleteReservation(id);
         return ResponseEntity.ok().body(new ResponseDTO<>(true, "Reserva eliminada"));
     }
-    @GetMapping("/{listingId}")
+    @GetMapping("/{listingId}/host")
     public ResponseEntity<ResponseUserDTO<Page<ReservDTO>>> getListingsByReservation(@PathVariable String listingId, @RequestParam int page){
         Page<ReservDTO> reservs = reservationService.getListingsByReservation(listingId,page);
         return ResponseEntity.ok().body(new ResponseUserDTO<>(true, "Se encontraron las siguientes", reservs));
